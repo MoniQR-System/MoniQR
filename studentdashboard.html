@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoniQR Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+    }
+
+    /* Top Navigation Styling */
+    .navbar-custom {
+      background-color: #fff;
+      padding: 15px 40px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .logo-section img {
+      height: 50px;
+      margin-right: 15px;
+    }
+
+    .nav-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    /* Folder Card Styling */
+    .folder-card {
+      background: #ebebeb;
+      border: none;
+      border-radius: 20px;
+      padding: 40px 20px;
+      text-align: center;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: block;
+      /* Makes the whole card clickable */
+      text-decoration: none;
+      /* Removes link underline */
+      color: inherit;
+    }
+
+    .folder-card:hover {
+      transform: translateY(-5px);
+      background-color: #e2e2e2;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      color: inherit;
+    }
+
+    .folder-icon {
+      width: 100px;
+      margin-bottom: 20px;
+      fill: #912727;
+      /* Your specific red color */
+    }
+
+    .folder-text {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    /* Chart Section Styling */
+    .chart-card {
+      background: #ebebeb;
+      border-radius: 20px;
+      padding: 30px;
+      min-height: 350px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-title {
+      text-align: center;
+      margin: 30px 0 20px;
+      font-weight: 600;
+    }
+
+    .placeholder-chart {
+      width: 100%;
+      height: 250px;
+      background-color: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aaa;
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-custom d-flex justify-content-between align-items-center">
+    <div class="logo-section d-flex align-items-center">
+      <img src="img/logo.png" alt="Logo" class="rounded-circle">
+      <span class="nav-title">MoniQR</span>
+    </div>
+    <div class="d-flex align-items-center">
+      <span class="me-3 text-muted">April 6, 2026 | 6:01 PM</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle"
+        viewBox="0 0 16 16">
+        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+        <path fill-rule="evenodd"
+          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+      </svg>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <h4 class="mb-4 fw-bold">My Class Folders</h4>
+    <div class="row g-4">
+
+      <div class="col-md-4">
+        <a href="capstone.html" class="folder-card">
+          <svg class="folder-icon" viewBox="0 0 16 16">
+            <path
+              d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
+          </svg>
+          <div class="folder-text">COMP 001 - Capstone</div>
+        </a>
+      </div>
+
+      <div class="col-md-4">
+        <a href="seminar.html" class="folder-card">
+          <svg class="folder-icon" viewBox="0 0 16 16">
+            <path
+              d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
+          </svg>
+          <div class="folder-text">COMP 002 - Seminar</div>
+        </a>
+      </div>
+
+      <div class="col-md-4">
+        <a href="ojt.html" class="folder-card">
+          <svg class="folder-icon" viewBox="0 0 16 16">
+            <path
+              d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
+          </svg>
+          <div class="folder-text">COMP 003 - OJT</div>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <h4 class="section-title">Weekly Performance</h4>
+        <div class="chart-card">
+          <div class="placeholder-chart">
+            [ Pie Chart Content ]
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h4 class="section-title">Monthly Performance</h4>
+        <div class="chart-card">
+          <div class="placeholder-chart">
+            [ Bar Chart Content ]
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
