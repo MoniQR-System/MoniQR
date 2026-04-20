@@ -2,178 +2,499 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MoniQR Dashboard</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoniQR - Professional Dashboard</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <style>
+    :root {
+      --bs-maroon: #7B1C2C;
+      --bs-maroon-light: #f0e6e8;
+      --sidebar-width: 85px;
+      --sidebar-expanded: 260px;
+      --transition-speed: 0.3s;
+    }
+
     body {
-      background-color: #f8f9fa;
-      font-family: 'Poppins', sans-serif;
-      color: #333;
+      font-family: 'DM Sans', sans-serif;
+      background-color: #f4f7f6;
+      overflow-x: hidden;
     }
 
-    /* Top Navigation Styling */
-    .navbar-custom {
-      background-color: #fff;
-      padding: 15px 40px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    #sidebar {
+      width: var(--sidebar-width);
+      transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1030;
+      background-color: var(--bs-maroon);
+      overflow: hidden;
     }
 
-    .logo-section img {
-      height: 50px;
-      margin-right: 15px;
+    #sidebar:hover {
+      width: var(--sidebar-expanded);
     }
 
-    .nav-title {
-      font-size: 1.5rem;
-      font-weight: 600;
+    .nav-label {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+      font-size: 1.1rem;
     }
 
-    /* Folder Card Styling */
+    #sidebar:hover .nav-label {
+      opacity: 1;
+    }
+
+    #main {
+      margin-left: var(--sidebar-width);
+      transition: margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 100vh;
+    }
+
+    #sidebar:hover+#main {
+      margin-left: var(--sidebar-expanded);
+    }
+
+    .sidebar-logo-img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link {
+      transition: all 0.2s ease;
+      border-left: 4px solid transparent;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-left-color: #fff;
+    }
+
     .folder-card {
-      background: #ebebeb;
-      border: none;
-      border-radius: 20px;
-      padding: 40px 20px;
-      text-align: center;
-      transition: all 0.2s ease-in-out;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      display: block;
-      /* Makes the whole card clickable */
-      text-decoration: none;
-      /* Removes link underline */
-      color: inherit;
+      width: 260px;
+      height: 260px;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      border: 2px solid transparent;
+      animation: fadeInUp 0.6s ease forwards;
+      opacity: 0;
     }
 
     .folder-card:hover {
-      transform: translateY(-5px);
-      background-color: #e2e2e2;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-      color: inherit;
+      background-color: var(--bs-maroon-light) !important;
+      border-color: var(--bs-maroon) !important;
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(123, 28, 44, 0.15) !important;
     }
 
     .folder-icon {
-      width: 100px;
-      margin-bottom: 20px;
-      fill: #912727;
-      /* Your specific red color */
+      font-size: 4.5rem;
+      color: var(--bs-maroon);
+      transition: transform 0.3s ease;
     }
 
-    .folder-text {
-      font-weight: 500;
-      font-size: 0.95rem;
+    .modal-content {
+      border-radius: 30px;
+      border: none;
+      background-color: #e0e0e0;
     }
 
-    /* Chart Section Styling */
-    .chart-card {
-      background: #ebebeb;
+    .stat-card {
+      background: #f8f9fa;
       border-radius: 20px;
-      padding: 30px;
-      min-height: 350px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .section-title {
+      padding: 15px;
       text-align: center;
-      margin: 30px 0 20px;
-      font-weight: 600;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+      flex: 1;
+      min-width: 110px;
     }
 
-    .placeholder-chart {
-      width: 100%;
-      height: 250px;
-      background-color: #fff;
-      border-radius: 10px;
-      display: flex;
+    .history-container {
+      background: #d9d9d9;
+      border-radius: 25px;
+      padding: 25px;
+      margin-top: 20px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
       align-items: center;
-      justify-content: center;
-      color: #aaa;
-      font-style: italic;
+      padding: 12px 0;
+      position: relative;
+    }
+
+    .timeline-item:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 7px;
+      top: 30px;
+      width: 1px;
+      height: calc(100% - 15px);
+      background: #888;
+    }
+
+    .dot {
+      height: 14px;
+      width: 14px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .time-text {
+      text-align: center;
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .status-text {
+      text-align: right;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .folder-card:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .folder-card:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .folder-card:nth-child(3) {
+      animation-delay: 0.3s;
     }
   </style>
 </head>
 
-<body>
+<body class="d-flex">
 
-  <nav class="navbar navbar-custom d-flex justify-content-between align-items-center">
-    <div class="logo-section d-flex align-items-center">
-      <img src="img/logo.png" alt="Logo" class="rounded-circle">
-      <span class="nav-title">MoniQR</span>
+  <nav id="sidebar" class="vh-100 position-fixed start-0 top-0 d-flex flex-column text-white shadow">
+    <div class="d-flex align-items-center px-3 border-bottom border-white border-opacity-10" style="height: 80px;">
+      <div style="min-width: calc(var(--sidebar-width) - 32px);" class="text-center">
+        <img src="img/logo1.png" alt="Logo" class="sidebar-logo-img">
+      </div>
     </div>
-    <div class="d-flex align-items-center">
-      <span class="me-3 text-muted">April 6, 2026 | 6:01 PM</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle"
-        viewBox="0 0 16 16">
-        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-        <path fill-rule="evenodd"
-          d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-      </svg>
+    <div class="flex-grow-1 pt-4">
+      <a href="#" class="nav-link text-white d-flex align-items-center py-3 px-0 active">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-grid-1x2 fs-3"></i></div>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="#" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-clipboard-data fs-3"></i>
+        </div>
+        <span class="nav-label">Reports</span>
+      </a>
     </div>
   </nav>
 
-  <div class="container my-5">
-    <h4 class="mb-4 fw-bold">My Class Folders</h4>
-    <div class="row g-4">
-
-      <div class="col-md-4">
-        <a href="capstone.html" class="folder-card">
-          <svg class="folder-icon" viewBox="0 0 16 16">
-            <path
-              d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
-          </svg>
-          <div class="folder-text">COMP 001 - Capstone</div>
-        </a>
-      </div>
-
-      <div class="col-md-4">
-        <a href="seminar.html" class="folder-card">
-          <svg class="folder-icon" viewBox="0 0 16 16">
-            <path
-              d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
-          </svg>
-          <div class="folder-text">COMP 002 - Seminar</div>
-        </a>
-      </div>
-
-      <div class="col-md-4">
-        <a href="ojt.html" class="folder-card">
-          <svg class="folder-icon" viewBox="0 0 16 16">
-            <path
-              d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a1.99 1.99 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3zm-8.322.12C1.72 3.042 1.95 3 2.19 3h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139z" />
-          </svg>
-          <div class="folder-text">COMP 003 - OJT</div>
-        </a>
-      </div>
-
-    </div>
-
-    <div class="row mt-5">
-      <div class="col-md-6">
-        <h4 class="section-title">Weekly Performance</h4>
-        <div class="chart-card">
-          <div class="placeholder-chart">
-            [ Pie Chart Content ]
+  <div id="main" class="flex-grow-1 d-flex flex-column">
+    <header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
+      <div class="container-fluid px-0">
+        <span class="navbar-brand text-dark m-0 fs-3 fw-bold">MoniQR</span>
+        <div class="ms-auto d-flex align-items-center gap-4">
+          <span class="text-muted d-none d-sm-inline" id="topbar-date"></span>
+          <div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm"
+            style="width: 45px; height: 45px; cursor: pointer;">
+            <i class="bi bi-person fs-4"></i>
           </div>
         </div>
       </div>
-      <div class="col-md-6">
-        <h4 class="section-title">Monthly Performance</h4>
-        <div class="chart-card">
-          <div class="placeholder-chart">
-            [ Bar Chart Content ]
+    </header>
+
+    <main class="p-4 p-lg-5">
+      <div class="mb-5">
+        <h3 class="fw-bold m-0">My Class Folders</h3>
+      </div>
+
+      <div class="d-flex flex-wrap gap-4 justify-content-start">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#capstoneModal"
+          class="folder-card bg-white border-0 rounded-5 d-flex flex-column align-items-center justify-content-center shadow-sm p-4 text-center text-decoration-none">
+          <i class="bi bi-folder-fill folder-icon mb-3"></i>
+          <span class="fs-6 fw-bold text-dark px-2">COMP 001 – Capstone</span>
+        </a>
+
+        <a href="#" data-bs-toggle="modal" data-bs-target="#seminarModal"
+          class="folder-card bg-white border-0 rounded-5 d-flex flex-column align-items-center justify-content-center shadow-sm p-4 text-center text-decoration-none">
+          <i class="bi bi-folder-fill folder-icon mb-3"></i>
+          <span class="fs-6 fw-bold text-dark px-2">COMP 002 – Seminar</span>
+        </a>
+
+        <a href="#" data-bs-toggle="modal" data-bs-target="#ojtModal"
+          class="folder-card bg-white border-0 rounded-5 d-flex flex-column align-items-center justify-content-center shadow-sm p-4 text-center text-decoration-none">
+          <i class="bi bi-folder-fill folder-icon mb-3"></i>
+          <span class="fs-6 fw-bold text-dark px-2">COMP 003 – OJT</span>
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal fade" id="capstoneModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content p-4 shadow-lg">
+        <div class="modal-header border-0 flex-column align-items-center position-relative">
+          <button type="button" class="btn-close position-absolute end-0 top-0" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+          <h4 class="fw-bold mb-0">COMP 001 – CAPSTONE</h4>
+          <p class="text-muted small">Monday | 2:00 PM – 8:00 PM</p>
+          <h5 class="mt-2 fw-bold">Attendance Record</h5>
+        </div>
+
+        <div class="modal-body">
+          <div class="d-flex flex-wrap gap-3 mb-4">
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Total Attendance</div>
+              <div class="fs-2 fw-bold">30</div>
+            </div>
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Present</div>
+              <div class="fs-2 fw-bold text-success">28</div>
+            </div>
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Late</div>
+              <div class="fs-2 fw-bold text-warning">1</div>
+            </div>
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Absent</div>
+              <div class="fs-2 fw-bold text-danger">1</div>
+            </div>
+          </div>
+
+          <div class="history-container shadow-sm">
+            <p class="text-center fw-bold mb-4">History of Attendance</p>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-success"></span>
+                <span>April 2, 2026</span>
+              </div>
+              <div class="time-text">8:00 AM</div>
+              <div class="status-text fw-bold text-success">PRESENT</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-warning"></span>
+                <span>April 3, 2026</span>
+              </div>
+              <div class="time-text">8:12 AM</div>
+              <div class="status-text fw-bold text-warning">LATE</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-success"></span>
+                <span>April 4, 2026</span>
+              </div>
+              <div class="time-text">7:56 AM</div>
+              <div class="status-text fw-bold text-success">PRESENT</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-danger"></span>
+                <span>April 4, 2026</span>
+              </div>
+              <div class="time-text">8:45 AM</div>
+              <div class="status-text fw-bold text-danger">ABSENT</div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-sm btn-light rounded-pill px-4 shadow-sm fw-bold">See More</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <div class="modal fade" id="seminarModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content p-4 shadow-lg">
+        <div class="modal-header border-0 flex-column align-items-center position-relative">
+          <button type="button" class="btn-close position-absolute end-0 top-0" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+          <h4 class="fw-bold mb-0">COMP 002 – SEMINAR</h4>
+          <p class="text-muted small">Saturday | 8:00 AM – 11:00 AM</p>
+          <h5 class="mt-2 fw-bold">Attendance Record</h5>
+        </div>
+
+        <div class="modal-body">
+          <div class="d-flex flex-wrap gap-3 mb-4">
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Total Attendance</div>
+              <div class="fs-2 fw-bold">30</div>
+            </div>
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Present</div>
+              <div class="fs-2 fw-bold text-success">28</div>
+            </div>
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Late</div>
+              <div class="fs-2 fw-bold text-warning">1</div>
+            </div>
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Absent</div>
+              <div class="fs-2 fw-bold text-danger">1</div>
+            </div>
+          </div>
+
+          <div class="history-container shadow-sm">
+            <p class="text-center fw-bold mb-4">History of Attendance</p>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-success"></span>
+                <span>April 2, 2026</span>
+              </div>
+              <div class="time-text">8:00 AM</div>
+              <div class="status-text fw-bold text-success">PRESENT</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-warning"></span>
+                <span>April 3, 2026</span>
+              </div>
+              <div class="time-text">8:12 AM</div>
+              <div class="status-text fw-bold text-warning">LATE</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-success"></span>
+                <span>April 4, 2026</span>
+              </div>
+              <div class="time-text">7:56 AM</div>
+              <div class="status-text fw-bold text-success">PRESENT</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-danger"></span>
+                <span>April 4, 2026</span>
+              </div>
+              <div class="time-text">8:45 AM</div>
+              <div class="status-text fw-bold text-danger">ABSENT</div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-sm btn-light rounded-pill px-4 shadow-sm fw-bold">See More</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <div class="modal fade" id="ojtModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content p-4 shadow-lg">
+        <div class="modal-header border-0 flex-column align-items-center position-relative">
+          <button type="button" class="btn-close position-absolute end-0 top-0" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+          <h4 class="fw-bold mb-0">COMP 003 – OJT</h4>
+          <p class="text-muted small">Saturday | 1:00 PM – 5:00 PM</p>
+          <h5 class="mt-2 fw-bold">Attendance Record</h5>
+        </div>
+
+        <div class="modal-body">
+          <div class="d-flex flex-wrap gap-3 mb-4">
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Total Attendance</div>
+              <div class="fs-2 fw-bold">30</div>
+            </div>
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Present</div>
+              <div class="fs-2 fw-bold text-success">28</div>
+            </div>
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Late</div>
+              <div class="fs-2 fw-bold text-warning">1</div>
+            </div>
+            <div class="stat-card shadow-sm">
+              <div class="small text-muted fw-bold">Absent</div>
+              <div class="fs-2 fw-bold text-danger">1</div>
+            </div>
+          </div>
+
+          <div class="history-container shadow-sm">
+            <p class="text-center fw-bold mb-4">History of Attendance</p>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-success"></span>
+                <span>April 2, 2026</span>
+              </div>
+              <div class="time-text">8:00 AM</div>
+              <div class="status-text fw-bold text-success">PRESENT</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-warning"></span>
+                <span>April 3, 2026</span>
+              </div>
+              <div class="time-text">8:12 AM</div>
+              <div class="status-text fw-bold text-warning">LATE</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-success"></span>
+                <span>April 4, 2026</span>
+              </div>
+              <div class="time-text">7:56 AM</div>
+              <div class="status-text fw-bold text-success">PRESENT</div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="d-flex align-items-center">
+                <span class="dot bg-danger"></span>
+                <span>April 4, 2026</span>
+              </div>
+              <div class="time-text">8:45 AM</div>
+              <div class="status-text fw-bold text-danger">ABSENT</div>
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-sm btn-light rounded-pill px-4 shadow-sm fw-bold">See More</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('en-US', {
+      weekday: 'short', month: 'long', day: 'numeric', year: 'numeric'
+    });
+  </script>
 </body>
 
 </html>
