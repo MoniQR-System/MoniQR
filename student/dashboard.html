@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MoniQR - Professional Dashboard</title>
-
+  <title>Student Dashboard</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
     rel="stylesheet" />
@@ -191,7 +189,6 @@
 </head>
 
 <body class="d-flex">
-
   <nav id="sidebar" class="vh-100 position-fixed start-0 top-0 d-flex flex-column text-white shadow">
     <div class="d-flex align-items-center px-3 border-bottom border-white border-opacity-10" style="height: 80px;">
       <div style="min-width: calc(var(--sidebar-width) - 32px);" class="text-center">
@@ -203,14 +200,13 @@
         <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-grid-1x2 fs-3"></i></div>
         <span class="nav-label">Dashboard</span>
       </a>
-      <a href="#" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+      <a href="reports.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
         <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-clipboard-data fs-3"></i>
         </div>
         <span class="nav-label">Reports</span>
       </a>
     </div>
   </nav>
-
   <div id="main" class="flex-grow-1 d-flex flex-column">
     <header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
       <div class="container-fluid px-0">
@@ -224,25 +220,21 @@
         </div>
       </div>
     </header>
-
     <main class="p-4 p-lg-5">
       <div class="mb-5">
         <h3 class="fw-bold m-0">My Class Folders</h3>
       </div>
-
       <div class="d-flex flex-wrap gap-4 justify-content-start">
         <a href="#" data-bs-toggle="modal" data-bs-target="#capstoneModal"
           class="folder-card bg-white border-0 rounded-5 d-flex flex-column align-items-center justify-content-center shadow-sm p-4 text-center text-decoration-none">
           <i class="bi bi-folder-fill folder-icon mb-3"></i>
           <span class="fs-6 fw-bold text-dark px-2">COMP 001 – Capstone</span>
         </a>
-
         <a href="#" data-bs-toggle="modal" data-bs-target="#seminarModal"
           class="folder-card bg-white border-0 rounded-5 d-flex flex-column align-items-center justify-content-center shadow-sm p-4 text-center text-decoration-none">
           <i class="bi bi-folder-fill folder-icon mb-3"></i>
           <span class="fs-6 fw-bold text-dark px-2">COMP 002 – Seminar</span>
         </a>
-
         <a href="#" data-bs-toggle="modal" data-bs-target="#ojtModal"
           class="folder-card bg-white border-0 rounded-5 d-flex flex-column align-items-center justify-content-center shadow-sm p-4 text-center text-decoration-none">
           <i class="bi bi-folder-fill folder-icon mb-3"></i>
@@ -251,7 +243,6 @@
       </div>
     </main>
   </div>
-
   <div class="modal fade" id="capstoneModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content p-4 shadow-lg">
@@ -262,7 +253,6 @@
           <p class="text-muted small">Monday | 2:00 PM – 8:00 PM</p>
           <h5 class="mt-2 fw-bold">Attendance Record</h5>
         </div>
-
         <div class="modal-body">
           <div class="d-flex flex-wrap gap-3 mb-4">
             <div class="stat-card shadow-sm">
@@ -282,10 +272,8 @@
               <div class="fs-2 fw-bold text-danger">1</div>
             </div>
           </div>
-
           <div class="history-container shadow-sm">
             <p class="text-center fw-bold mb-4">History of Attendance</p>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-success"></span>
@@ -294,7 +282,6 @@
               <div class="time-text">8:00 AM</div>
               <div class="status-text fw-bold text-success">PRESENT</div>
             </div>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-warning"></span>
@@ -303,7 +290,6 @@
               <div class="time-text">8:12 AM</div>
               <div class="status-text fw-bold text-warning">LATE</div>
             </div>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-success"></span>
@@ -312,7 +298,6 @@
               <div class="time-text">7:56 AM</div>
               <div class="status-text fw-bold text-success">PRESENT</div>
             </div>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-danger"></span>
@@ -321,7 +306,6 @@
               <div class="time-text">8:45 AM</div>
               <div class="status-text fw-bold text-danger">ABSENT</div>
             </div>
-
             <div class="text-center mt-4">
               <button class="btn btn-sm btn-light rounded-pill px-4 shadow-sm fw-bold">See More</button>
             </div>
@@ -330,7 +314,6 @@
       </div>
     </div>
   </div>
-
   <div class="modal fade" id="seminarModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content p-4 shadow-lg">
@@ -341,7 +324,6 @@
           <p class="text-muted small">Saturday | 8:00 AM – 11:00 AM</p>
           <h5 class="mt-2 fw-bold">Attendance Record</h5>
         </div>
-
         <div class="modal-body">
           <div class="d-flex flex-wrap gap-3 mb-4">
             <div class="stat-card shadow-sm">
@@ -361,10 +343,8 @@
               <div class="fs-2 fw-bold text-danger">1</div>
             </div>
           </div>
-
           <div class="history-container shadow-sm">
             <p class="text-center fw-bold mb-4">History of Attendance</p>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-success"></span>
@@ -373,7 +353,6 @@
               <div class="time-text">8:00 AM</div>
               <div class="status-text fw-bold text-success">PRESENT</div>
             </div>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-warning"></span>
@@ -382,7 +361,6 @@
               <div class="time-text">8:12 AM</div>
               <div class="status-text fw-bold text-warning">LATE</div>
             </div>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-success"></span>
@@ -391,7 +369,6 @@
               <div class="time-text">7:56 AM</div>
               <div class="status-text fw-bold text-success">PRESENT</div>
             </div>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-danger"></span>
@@ -400,7 +377,6 @@
               <div class="time-text">8:45 AM</div>
               <div class="status-text fw-bold text-danger">ABSENT</div>
             </div>
-
             <div class="text-center mt-4">
               <button class="btn btn-sm btn-light rounded-pill px-4 shadow-sm fw-bold">See More</button>
             </div>
@@ -409,7 +385,6 @@
       </div>
     </div>
   </div>
-
    <div class="modal fade" id="ojtModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content p-4 shadow-lg">
@@ -420,7 +395,6 @@
           <p class="text-muted small">Saturday | 1:00 PM – 5:00 PM</p>
           <h5 class="mt-2 fw-bold">Attendance Record</h5>
         </div>
-
         <div class="modal-body">
           <div class="d-flex flex-wrap gap-3 mb-4">
             <div class="stat-card shadow-sm">
@@ -440,10 +414,8 @@
               <div class="fs-2 fw-bold text-danger">1</div>
             </div>
           </div>
-
           <div class="history-container shadow-sm">
             <p class="text-center fw-bold mb-4">History of Attendance</p>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-success"></span>
@@ -452,7 +424,6 @@
               <div class="time-text">8:00 AM</div>
               <div class="status-text fw-bold text-success">PRESENT</div>
             </div>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-warning"></span>
@@ -461,8 +432,6 @@
               <div class="time-text">8:12 AM</div>
               <div class="status-text fw-bold text-warning">LATE</div>
             </div>
-
-            <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-success"></span>
                 <span>April 4, 2026</span>
@@ -470,7 +439,6 @@
               <div class="time-text">7:56 AM</div>
               <div class="status-text fw-bold text-success">PRESENT</div>
             </div>
-
             <div class="timeline-item">
               <div class="d-flex align-items-center">
                 <span class="dot bg-danger"></span>
@@ -479,7 +447,6 @@
               <div class="time-text">8:45 AM</div>
               <div class="status-text fw-bold text-danger">ABSENT</div>
             </div>
-
             <div class="text-center mt-4">
               <button class="btn btn-sm btn-light rounded-pill px-4 shadow-sm fw-bold">See More</button>
             </div>
@@ -488,7 +455,6 @@
       </div>
     </div>
   </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script>
     document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('en-US', {
