@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Student Dashboard - Archived</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -84,6 +86,7 @@
       padding: 2rem 1rem;
       text-align: center;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      cursor: pointer;
     }
 
     .folder-card:hover {
@@ -121,8 +124,89 @@
       justify-content: center;
       gap: 3px;
     }
+
+    .attendance-modal .modal-content {
+      border-radius: 30px;
+      border: none;
+      background-color: #ececec;
+      padding: 20px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 20px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    .history-container {
+      background: #dadada;
+      border-radius: 25px;
+      padding: 25px;
+      margin-top: 20px;
+    }
+
+    .attendance-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-right: 15px;
+      z-index: 2;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 5px;
+      top: 0;
+      bottom: -15px;
+      width: 2px;
+      background: #999;
+      z-index: 1;
+    }
+
+    .attendance-item:last-child .timeline-line {
+      display: none;
+    }
+
+    .attendance-time {
+      text-align: center;
+      flex: 1;
+    }
+
+    .attendance-date {
+      flex: 1;
+    }
+
+    .attendance-status {
+      width: 100px;
+      text-align: right;
+    }
+
+    .btn-see-more {
+      background: white;
+      border-radius: 20px;
+      padding: 5px 25px;
+      border: none;
+      font-weight: 600;
+      display: block;
+      margin: 10px auto 0;
+    }
   </style>
 </head>
+
 <body class="d-flex">
   <nav id="sidebar" class="vh-100 position-fixed start-0 top-0 d-flex flex-column text-white shadow">
     <div class="d-flex align-items-center px-3 border-bottom border-white border-opacity-10" style="height: 80px;">
@@ -136,7 +220,8 @@
         <span class="nav-label">Dashboard</span>
       </a>
       <a href="#" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
-        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-clipboard-data fs-3"></i></div>
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-clipboard-data fs-3"></i>
+        </div>
         <span class="nav-label">Reports</span>
       </a>
       <a href="archived.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
@@ -146,11 +231,13 @@
     </div>
     <div class="pb-4">
       <a href="logout.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
-        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-box-arrow-left fs-3"></i></div>
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-box-arrow-left fs-3"></i>
+        </div>
         <span class="nav-label">Sign Out</span>
       </a>
     </div>
   </nav>
+
   <div id="main" class="flex-grow-1 d-flex flex-column">
     <header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
       <div class="container-fluid px-0">
@@ -158,8 +245,9 @@
 
         <div class="ms-auto d-flex align-items-center gap-4">
           <span class="text-muted d-none d-sm-inline" id="topbar-date"></span>
-          <div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm" style="width: 45px; height: 45px; cursor: pointer;">
-            <i class="bi bi-person fs-4"></i>
+          <div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm"
+            style="width: 45px; height: 45px; cursor: pointer;">
+            <i class="bi bi-person-fill fs-4" style="color: #7B1C2C;"></i>
           </div>
         </div>
       </div>
@@ -168,7 +256,7 @@
       <h2 class="mb-4 fw-bold">My Class Folders</h2>
       <div class="row g-4">
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="folder-card">
+          <div class="folder-card" data-bs-toggle="modal" data-bs-target="#capstoneModal">
             <i class="bi bi-folder-fill folder-icon"></i>
             <div class="subject-code">COMP 001 – Capstone</div>
             <div class="prof-name"><i class="bi bi-person-fill me-1"></i>Prof. Elaine Bolambot</div>
@@ -178,7 +266,7 @@
           </div>
         </div>
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="folder-card">
+          <div class="folder-card" data-bs-toggle="modal" data-bs-target="#seminarModal">
             <i class="bi bi-folder-fill folder-icon"></i>
             <div class="subject-code">COMP 002 – Seminar</div>
             <div class="prof-name"><i class="bi bi-person-fill me-1"></i>Prof. Christopher Jay De Claro</div>
@@ -188,7 +276,7 @@
           </div>
         </div>
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="folder-card">
+          <div class="folder-card" data-bs-toggle="modal" data-bs-target="#ojtModal">
             <i class="bi bi-folder-fill folder-icon"></i>
             <div class="subject-code">COMP 003 – OJT</div>
             <div class="prof-name"><i class="bi bi-person-fill me-1"></i>Prof. Melani L. Castillo</div>
@@ -200,6 +288,253 @@
       </div>
     </main>
   </div>
+
+  <div class="modal fade attendance-modal" id="capstoneModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+          <div class="w-100 text-center">
+            <h4 class="fw-bold mb-0">COMP 001 – CAPSTONE</h4>
+            <p class="text-muted small mb-0">MWF | 9:00 AM – 12:00 PM</p>
+            <p class="text-muted small">Attendance Record</p>
+          </div>
+          <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3 text-center">
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Total Attendance</div>
+                <div class="stat-value text-dark">30</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Present</div>
+                <div class="stat-value text-success">28</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Late</div>
+                <div class="stat-value text-warning">1</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Absent</div>
+                <div class="stat-value text-danger">1</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="history-container">
+            <h6 class="text-center fw-bold mb-4">History of Attendance</h6>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-success"></div>
+              <div class="attendance-date">April 2, 2026</div>
+              <div class="text-muted attendance-time">8:00 AM</div>
+              <div class="attendance-status text-success fw-bold">PRESENT</div>
+            </div>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-warning"></div>
+              <div class="attendance-date">April 3, 2026</div>
+              <div class="text-muted attendance-time">8:12 AM</div>
+              <div class="attendance-status text-warning fw-bold">LATE</div>
+            </div>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-success"></div>
+              <div class="attendance-date">April 4, 2026</div>
+              <div class="text-muted attendance-time">7:56 AM</div>
+              <div class="attendance-status text-success fw-bold">PRESENT</div>
+            </div>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-danger"></div>
+              <div class="attendance-date">April 4, 2026</div>
+              <div class="text-muted attendance-time">8:45 AM</div>
+              <div class="attendance-status text-danger fw-bold">ABSENT</div>
+            </div>
+
+            <button class="btn-see-more">See More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade attendance-modal" id="seminarModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+          <div class="w-100 text-center">
+            <h4 class="fw-bold mb-0">COMP 002 – SEMINAR</h4>
+            <p class="text-muted small mb-0">S | 8:00 AM – 11:00 AM</p>
+            <p class="text-muted small">Attendance Record</p>
+          </div>
+          <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3 text-center">
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Total Attendance</div>
+                <div class="stat-value text-dark">30</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Present</div>
+                <div class="stat-value text-success">28</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Late</div>
+                <div class="stat-value text-warning">1</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Absent</div>
+                <div class="stat-value text-danger">1</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="history-container">
+            <h6 class="text-center fw-bold mb-4">History of Attendance</h6>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-success"></div>
+              <div class="attendance-date">April 2, 2026</div>
+              <div class="text-muted attendance-time">8:00 AM</div>
+              <div class="attendance-status text-success fw-bold">PRESENT</div>
+            </div>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-warning"></div>
+              <div class="attendance-date">April 3, 2026</div>
+              <div class="text-muted attendance-time">8:12 AM</div>
+              <div class="attendance-status text-warning fw-bold">LATE</div>
+            </div>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-success"></div>
+              <div class="attendance-date">April 4, 2026</div>
+              <div class="text-muted attendance-time">7:56 AM</div>
+              <div class="attendance-status text-success fw-bold">PRESENT</div>
+            </div>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-danger"></div>
+              <div class="attendance-date">April 4, 2026</div>
+              <div class="text-muted attendance-time">8:45 AM</div>
+              <div class="attendance-status text-danger fw-bold">ABSENT</div>
+            </div>
+
+            <button class="btn-see-more">See More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade attendance-modal" id="ojtModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header border-0 pb-0">
+          <div class="w-100 text-center">
+            <h4 class="fw-bold mb-0">COMP 003 – OJT</h4>
+            <p class="text-muted small mb-0">S | 2:00 PM – 8:00 PM</p>
+            <p class="text-muted small">Attendance Record</p>
+          </div>
+          <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-3 text-center">
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Total Attendance</div>
+                <div class="stat-value text-dark">30</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Present</div>
+                <div class="stat-value text-success">28</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Late</div>
+                <div class="stat-value text-warning">1</div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="stat-card">
+                <div class="small text-muted fw-bold">Absent</div>
+                <div class="stat-value text-danger">1</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="history-container">
+            <h6 class="text-center fw-bold mb-4">History of Attendance</h6>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-success"></div>
+              <div class="attendance-date">April 2, 2026</div>
+              <div class="text-muted attendance-time">8:00 AM</div>
+              <div class="attendance-status text-success fw-bold">PRESENT</div>
+            </div>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-warning"></div>
+              <div class="attendance-date">April 3, 2026</div>
+              <div class="text-muted attendance-time">8:12 AM</div>
+              <div class="attendance-status text-warning fw-bold">LATE</div>
+            </div>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-success"></div>
+              <div class="attendance-date">April 4, 2026</div>
+              <div class="text-muted attendance-time">7:56 AM</div>
+              <div class="attendance-status text-success fw-bold">PRESENT</div>
+            </div>
+
+            <div class="attendance-item">
+              <div class="timeline-line"></div>
+              <div class="status-dot bg-danger"></div>
+              <div class="attendance-date">April 4, 2026</div>
+              <div class="text-muted attendance-time">8:45 AM</div>
+              <div class="attendance-status text-danger fw-bold">ABSENT</div>
+            </div>
+
+            <button class="btn-see-more">See More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script>
     document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('en-US', {
