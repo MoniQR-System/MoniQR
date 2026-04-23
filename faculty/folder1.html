@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faculty Module - Capstone</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bs-maroon: #7B1C2C;
+      --bs-maroon-hover: #5a1420;
+      --bs-maroon-light: #f0e6e8;
+      --sidebar-width: 85px;
+      --sidebar-expanded: 260px;
+      --transition-speed: 0.3s;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #f4f7f6;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar Styles */
+    #sidebar {
+      width: var(--sidebar-width);
+      transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1030;
+      background-color: var(--bs-maroon);
+      overflow: hidden;
+    }
+
+    #sidebar:hover {
+      width: var(--sidebar-expanded);
+    }
+
+    .nav-label {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+      font-size: 1.1rem;
+    }
+
+    #sidebar:hover .nav-label {
+      opacity: 1;
+    }
+
+    .sidebar-logo-img {
+      width: 42px;
+      height: 42px;
+      object-fit: contain;
+    }
+
+    .nav-link {
+      transition: all 0.2s ease;
+      border-left: 4px solid transparent;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-left-color: #fff;
+    }
+
+    #main {
+      margin-left: var(--sidebar-width);
+      transition: margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 100vh;
+    }
+
+    #sidebar:hover+#main {
+      margin-left: var(--sidebar-expanded);
+    }
+
+    /* Table & Content Styles from Image */
+    .header-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .back-circle {
+      width: 40px;
+      height: 40px;
+      background-color: var(--bs-maroon);
+      color: white;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      margin-right: 15px;
+      transition: transform 0.2s;
+    }
+
+    .back-circle:hover {
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .subject-title {
+      font-size: 2.2rem;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+
+    .enrolled-text {
+      font-style: italic;
+      color: #666;
+      margin-left: 55px;
+      margin-top: -10px;
+    }
+
+    .btn-maroon {
+      background-color: var(--bs-maroon);
+      color: white;
+      border-radius: 12px;
+      padding: 8px 20px;
+      font-weight: 400;
+      border: none;
+      transition: background 0.2s;
+    }
+
+    .btn-maroon:hover {
+      background-color: var(--bs-maroon-hover);
+      color: white;
+    }
+
+    .data-card {
+      background: #fdfdfd;
+      border-radius: 40px;
+      padding: 2.5rem;
+      border: 1px solid #eee;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .table {
+      border-collapse: separate;
+      border-spacing: 0 10px;
+    }
+
+    .table thead th {
+      border: none;
+      font-weight: 500;
+      color: #333;
+      font-size: 1.1rem;
+      padding-bottom: 20px;
+    }
+
+    .table tbody td {
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 15px 10px;
+      vertical-align: middle;
+      color: #444;
+    }
+
+    .table tbody td:first-child {
+      border-left: none;
+    }
+
+    .table tbody td:last-child {
+      border-right: none;
+    }
+
+    /* Badges */
+    .badge-custom {
+      padding: 6px 20px;
+      border-radius: 20px;
+      font-weight: 400;
+      display: inline-block;
+      min-width: 90px;
+      text-align: center;
+    }
+
+    .bg-present {
+      background-color: #c4f9c7;
+      color: #1e7d24;
+    }
+
+    .bg-late {
+      background-color: #fff9c4;
+      color: #857e1e;
+    }
+
+    .bg-absent {
+      background-color: #f9c4c4;
+      color: #7d1e1e;
+    }
+
+    .bg-active {
+      background-color: #c4e5f9;
+      color: #1e5a7d;
+    }
+
+    .bg-disabled {
+      background-color: #d1d1d1;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body class="d-flex">
+  <nav id="sidebar" class="vh-100 position-fixed start-0 top-0 d-flex flex-column text-white shadow">
+    <div class="d-flex align-items-center px-3 border-bottom border-white border-opacity-10" style="height: 80px;">
+      <div style="min-width: calc(var(--sidebar-width) - 32px);" class="text-center">
+        <img src="../img/logo1.png" alt="Logo" class="sidebar-logo-img">
+      </div>
+    </div>
+    <div class="flex-grow-1 pt-4">
+      <a href="dashboard.html" class="nav-link text-white d-flex align-items-center py-3 px-0 active">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-grid-1x2 fs-3"></i>
+        </div>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="#" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-clipboard-data fs-3"></i>
+        </div>
+        <span class="nav-label">Reports</span>
+      </a>
+      <a href="archived.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-archive fs-3"></i>
+        </div>
+        <span class="nav-label">Archived Subject</span>
+      </a>
+    </div>
+    <div class="pb-4">
+      <a href="logout.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-box-arrow-left fs-3"></i>
+        </div>
+        <span class="nav-label">Sign Out</span>
+      </a>
+    </div>
+  </nav>
+
+  <div id="main" class="flex-grow-1 d-flex flex-column">
+    <header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
+      <div class="container-fluid px-0">
+        <span class="navbar-brand text-dark m-0 fs-3 fw-bold">MoniQR</span>
+        <div class="ms-auto d-flex align-items-center gap-4">
+          <span class="text-muted d-none d-sm-inline" id="topbar-date"></span>
+          <div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm"
+            style="width: 45px; height: 45px; cursor: pointer;">
+            <i class="bi bi-person-fill fs-4" style="color: #7B1C2C;"></i>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="p-4 p-lg-5">
+      <div class="header-section">
+        <div>
+          <div class="d-flex align-items-center">
+            <a href="dashboard.html" class="back-circle"><i class="bi bi-chevron-right"></i></a>
+            <h1 class="subject-title">Capstone</h1>
+          </div>
+          <p class="enrolled-text pt-2">51 Students Enrolled</p>
+        </div>
+        <div class="d-flex gap-3">
+          <button class="btn btn-maroon"><i class="bi bi-qr-code-scan me-2"></i>Scan QR Code</button>
+          <button class="btn btn-maroon"><i class="bi bi-bar-chart-fill me-2"></i>Generate Report</button>
+        </div>
+      </div>
+
+      <div class="data-card">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 30%;">Name</th>
+                <th style="width: 20%;">Student ID</th>
+                <th style="width: 20%;">Last Attendance</th>
+                <th style="width: 15%;">Remarks</th>
+                <th style="width: 15%;">State</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. Shamel G. Camposano</td>
+                <td>2023-00323-ST-0</td>
+                <td>April 20, 2026 | 8:00 AM</td>
+                <td><span class="badge-custom bg-present">Present</span></td>
+                <td><span class="badge-custom bg-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>2. Jodiel Mhae B. Mores</td>
+                <td>2023-00008-ST-0</td>
+                <td>April 20, 2026 | 8:05 AM</td>
+                <td><span class="badge-custom bg-late">Late</span></td>
+                <td><span class="badge-custom bg-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>3. Angeline Eunice J. Cabanes</td>
+                <td>2023-00322-ST-0</td>
+                <td>April 20, 2026 | 8:45 AM</td>
+                <td><span class="badge-custom bg-absent">Absent</span></td>
+                <td><span class="badge-custom bg-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>4. Patricia M. Falible</td>
+                <td>2023-00352-ST-0</td>
+                <td>April 20, 2026 | 7:53 AM</td>
+                <td><span class="badge-custom bg-present">Present</span></td>
+                <td><span class="badge-custom bg-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>5. Jhie Ann Pearl D. Villarosa</td>
+                <td>2023-00021-ST-0</td>
+                <td>June 1, 2026 | 8:02 AM</td>
+                <td><span class="badge-custom bg-late">Late</span></td>
+                <td><span class="badge-custom bg-disabled">Disabled</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  </script>
+</body>
+
+</html>
