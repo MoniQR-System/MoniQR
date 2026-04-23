@@ -2,339 +2,556 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Faculty Module - Capstone</title>
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
-		rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faculty Module - OJT</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
 
-	<style>
-		:root {
-			--bs-maroon: #7B1C2C;
-			--bs-maroon-hover: #5a1420;
-			--bs-maroon-light: #f0e6e8;
-			--sidebar-width: 85px;
-			--sidebar-expanded: 260px;
-			--transition-speed: 0.3s;
-		}
+  <style>
+    :root {
+      --bs-maroon: #7B1C2C;
+      --bs-maroon-hover: #5a1420;
+      --bs-maroon-light: #f0e6e8;
+      --sidebar-width: 85px;
+      --sidebar-expanded: 260px;
+      --transition-speed: 0.3s;
+    }
 
-		body {
-			font-family: 'DM Sans', sans-serif;
-			background-color: #f4f7f6;
-			overflow-x: hidden;
-		}
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #f4f7f6;
+      overflow-x: hidden;
+    }
 
-		/* Sidebar Styles */
-		#sidebar {
-			width: var(--sidebar-width);
-			transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-			z-index: 1030;
-			background-color: var(--bs-maroon);
-			overflow: hidden;
-		}
+    #sidebar {
+      width: var(--sidebar-width);
+      transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1030;
+      background-color: var(--bs-maroon);
+      overflow: hidden;
+    }
 
-		#sidebar:hover {
-			width: var(--sidebar-expanded);
-		}
+    #sidebar:hover {
+      width: var(--sidebar-expanded);
+    }
 
-		.nav-label {
-			opacity: 0;
-			transition: opacity 0.2s ease;
-			white-space: nowrap;
-			font-size: 1.1rem;
-		}
+    .sidebar-logo-img {
+      width: 0;
+      height: auto;
+      max-height: 140px;
+      object-fit: contain;
+      opacity: 0;
+      transition: all 0.3s ease;
+      transform: scale(0.6);
+      display: block;
+      margin: 30px auto;
+    }
 
-		#sidebar:hover .nav-label {
-			opacity: 1;
-		}
+    #sidebar:hover .sidebar-logo-img {
+      width: 200px;
+      opacity: 1;
+      transform: scale(1);
+    }
 
-		.sidebar-logo-img {
-			width: 42px;
-			height: 42px;
-			object-fit: contain;
-		}
+    .nav-label {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+      font-size: 1.1rem;
+    }
 
-		.nav-link {
-			transition: all 0.2s ease;
-			border-left: 4px solid transparent;
-		}
+    #sidebar:hover .nav-label {
+      opacity: 1;
+    }
 
-		.nav-link:hover {
-			background-color: rgba(255, 255, 255, 0.1);
-		}
+    .nav-link {
+      transition: all 0.2s ease;
+      border-left: 4px solid transparent;
+      cursor: pointer;
+    }
 
-		.nav-link.active {
-			background-color: rgba(255, 255, 255, 0.15);
-			border-left-color: #fff;
-		}
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
 
-		#main {
-			margin-left: var(--sidebar-width);
-			transition: margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
-			min-height: 100vh;
-		}
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-left-color: #fff;
+    }
 
-		#sidebar:hover+#main {
-			margin-left: var(--sidebar-expanded);
-		}
+    #main {
+      margin-left: var(--sidebar-width);
+      transition: margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 100vh;
+    }
 
-		/* Table & Content Styles from Image */
-		.header-section {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 2rem;
-		}
+    #sidebar:hover+#main {
+      margin-left: var(--sidebar-expanded);
+    }
 
-		.back-circle {
-			width: 40px;
-			height: 40px;
-			background-color: var(--bs-maroon);
-			color: white;
-			border-radius: 50%;
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			text-decoration: none;
-			margin-right: 15px;
-			transition: transform 0.2s;
-		}
+    .profile-dropdown-menu {
+      border-radius: 15px;
+      overflow: hidden;
+      min-width: 200px;
+    }
 
-		.back-circle:hover {
-			color: white;
-			transform: scale(1.1);
-		}
+    .profile-dropdown-menu .dropdown-item {
+      padding: 0.6rem 1.2rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
 
-		.subject-title {
-			font-size: 2.2rem;
-			font-weight: 500;
-			margin-bottom: 0;
-		}
+    .profile-dropdown-menu .dropdown-item:hover {
+      background-color: var(--bs-maroon-light);
+      color: var(--bs-maroon);
+    }
 
-		.enrolled-text {
-			font-style: italic;
-			color: #666;
-			margin-left: 55px;
-			margin-top: -10px;
-		}
+    .profile-dropdown-menu .dropdown-item i {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+    }
 
-		.btn-maroon {
-			background-color: var(--bs-maroon);
-			color: white;
-			border-radius: 12px;
-			padding: 8px 20px;
-			font-weight: 400;
-			border: none;
-			transition: background 0.2s;
-		}
+    .logout-modal .modal-content {
+      border-radius: 15px;
+      border: none;
+    }
 
-		.btn-maroon:hover {
-			background-color: var(--bs-maroon-hover);
-			color: white;
-		}
+    .header-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
 
-		.data-card {
-			background: #fdfdfd;
-			border-radius: 40px;
-			padding: 2.5rem;
-			border: 1px solid #eee;
-			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-		}
+    .back-circle {
+      width: 40px;
+      height: 40px;
+      background-color: var(--bs-maroon);
+      color: white;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      margin-right: 15px;
+      transition: transform 0.2s;
+    }
 
-		.table {
-			border-collapse: separate;
-			border-spacing: 0 10px;
-		}
+    .back-circle:hover {
+      color: white;
+      transform: scale(1.1);
+    }
 
-		.table thead th {
-			border: none;
-			font-weight: 500;
-			color: #333;
-			font-size: 1.1rem;
-			padding-bottom: 20px;
-		}
+    .subject-title {
+      font-size: 2.2rem;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
 
-		.table tbody td {
-			border-top: 1px solid #eee;
-			border-bottom: 1px solid #eee;
-			padding: 15px 10px;
-			vertical-align: middle;
-			color: #444;
-		}
+    .enrolled-text {
+      font-style: italic;
+      color: #666;
+      margin-left: 55px;
+      margin-top: -10px;
+    }
 
-		.table tbody td:first-child {
-			border-left: none;
-		}
+    .btn-maroon {
+      background-color: var(--bs-maroon);
+      color: white;
+      border-radius: 12px;
+      padding: 8px 20px;
+      font-weight: 400;
+      border: none;
+      transition: background 0.2s;
+    }
 
-		.table tbody td:last-child {
-			border-right: none;
-		}
+    .btn-maroon:hover {
+      background-color: var(--bs-maroon-hover);
+      color: white;
+    }
 
-		/* Badges */
-		.badge-custom {
-			padding: 6px 20px;
-			border-radius: 20px;
-			font-weight: 400;
-			display: inline-block;
-			min-width: 90px;
-			text-align: center;
-		}
+    .data-card {
+      background: #fdfdfd;
+      border-radius: 40px;
+      padding: 2.5rem;
+      border: 1px solid #eee;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
 
-		.bg-present {
-			background-color: #c4f9c7;
-			color: #1e7d24;
-		}
+    .table {
+      border-collapse: separate;
+      border-spacing: 0 10px;
+    }
 
-		.bg-late {
-			background-color: #fff9c4;
-			color: #857e1e;
-		}
+    .table thead th {
+      border: none;
+      font-weight: 500;
+      color: #333;
+      font-size: 1.1rem;
+      padding-bottom: 20px;
+    }
 
-		.bg-absent {
-			background-color: #f9c4c4;
-			color: #7d1e1e;
-		}
+    .table tbody td {
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      padding: 15px 10px;
+      vertical-align: middle;
+      color: #444;
+    }
 
-		.bg-active {
-			background-color: #c4e5f9;
-			color: #1e5a7d;
-		}
+    .table tbody td:first-child {
+      border-left: none;
+    }
 
-		.bg-disabled {
-			background-color: #d1d1d1;
-			color: #666;
-		}
-	</style>
+    .table tbody td:last-child {
+      border-right: none;
+    }
+
+    .badge-custom {
+      padding: 6px 20px;
+      border-radius: 20px;
+      font-weight: 400;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 100px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .editable-remark {
+      cursor: pointer;
+    }
+
+    .editable-remark:hover {
+      filter: brightness(0.95);
+    }
+
+    .editable-remark::after {
+      display: none;
+    }
+
+    .bg-present {
+      background-color: #c4f9c7;
+      color: #1e7d24;
+    }
+
+    .bg-late {
+      background-color: #fff9c4;
+      color: #857e1e;
+    }
+
+    .bg-absent {
+      background-color: #f9c4c4;
+      color: #7d1e1e;
+    }
+
+    .bg-excused {
+      background-color: #e2dcf4;
+      color: #4a348b;
+    }
+
+    .bg-active {
+      background-color: #c4e5f9;
+      color: #1e5a7d;
+    }
+
+    .bg-disabled {
+      background-color: #d1d1d1;
+      color: #666;
+    }
+
+    .remarks-dropdown {
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 8px;
+    }
+
+    .remarks-dropdown .dropdown-item {
+      border-radius: 8px;
+      padding: 6px 15px;
+      margin-bottom: 2px;
+      font-weight: 500;
+    }
+
+    .remarks-dropdown .dropdown-item:last-child {
+      margin-bottom: 0;
+    }
+  </style>
 </head>
 
 <body class="d-flex">
-	<nav id="sidebar" class="vh-100 position-fixed start-0 top-0 d-flex flex-column text-white shadow">
-		<div class="d-flex align-items-center px-3 border-bottom border-white border-opacity-10" style="height: 80px;">
-			<div style="min-width: calc(var(--sidebar-width) - 32px);" class="text-center">
-				<img src="../img/logo1.png" alt="Logo" class="sidebar-logo-img">
-			</div>
-		</div>
-		<div class="flex-grow-1 pt-4">
-			<a href="dashboard.html" class="nav-link text-white d-flex align-items-center py-3 px-0 active">
-				<div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-grid-1x2 fs-3"></i>
-				</div>
-				<span class="nav-label">Dashboard</span>
-			</a>
-			<a href="#" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
-				<div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-clipboard-data fs-3"></i>
-				</div>
-				<span class="nav-label">Reports</span>
-			</a>
-			<a href="archived.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
-				<div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-archive fs-3"></i>
-				</div>
-				<span class="nav-label">Archived Subject</span>
-			</a>
-		</div>
-		<div class="pb-4">
-			<a href="logout.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
-				<div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-box-arrow-left fs-3"></i>
-				</div>
-				<span class="nav-label">Sign Out</span>
-			</a>
-		</div>
-	</nav>
+  <nav id="sidebar" class="vh-100 position-fixed start-0 top-0 d-flex flex-column text-white shadow">
+    <div class="d-flex align-items-center px-3" style="min-height: 150px;">
+      <div class="w-100 text-center">
+        <img src="../img/logo1.png" alt="Logo" class="sidebar-logo-img">
+      </div>
+    </div>
+    <div class="flex-grow-1 pt-2">
+      <a href="dashboard.html" class="nav-link text-white d-flex align-items-center py-3 px-0 active">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-grid-1x2 fs-3"></i>
+        </div>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="archived.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-archive fs-3"></i>
+        </div>
+        <span class="nav-label">Archived Subject</span>
+      </a>
+    </div>
+    <div class="pb-4">
+      <a class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75" data-bs-toggle="modal"
+        data-bs-target="#logoutModal">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-box-arrow-left fs-3"></i>
+        </div>
+        <span class="nav-label">Sign Out</span>
+      </a>
+    </div>
+  </nav>
+  <div id="main" class="flex-grow-1 d-flex flex-column">
+    <header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
+      <div class="container-fluid px-0">
+        <span class="navbar-brand text-dark m-0 fs-3 fw-bold">MoniQR</span>
+        <div class="ms-auto d-flex align-items-center gap-4">
+          <div class="text-muted d-none d-sm-flex align-items-center">
+            <span id="topbar-date"></span>
+            <span class="mx-2">|</span>
+            <span id="topbar-time"></span>
+          </div>
+          <div class="dropdown">
+            <div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm"
+              style="width: 45px; height: 45px; cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-fill fs-4" style="color: #7B1C2C;"></i>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 profile-dropdown-menu mt-2">
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-2" href="../faculty/profile.html">
+                  <i class="bi bi-person text-muted"></i> Profile
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-2" href="../faculty/changepass.html">
+                  <i class="bi bi-shield-lock text-muted"></i> Change Password
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="p-4 p-lg-5">
+      <div class="header-section">
+        <div>
+          <div class="d-flex align-items-center">
+            <a href="dashboard.html" class="back-circle"><i class="bi bi-chevron-right"></i></a>
+            <h1 class="subject-title">OJT</h1>
+          </div>
+          <p class="enrolled-text pt-2">54 Students Enrolled</p>
+        </div>
+        <div class="d-flex gap-3">
+          <button class="btn btn-maroon"><i class="bi bi-qr-code-scan me-2"></i>Scan QR Code</button>
+          <button class="btn btn-maroon"><i class="bi bi-bar-chart-fill me-2"></i>Generate Report</button>
+        </div>
+      </div>
+      <div class="data-card">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width: 30%;">Name</th>
+                <th style="width: 20%;">Student ID</th>
+                <th style="width: 20%;">Last Attendance</th>
+                <th style="width: 15%;">Department</th>
+                <th style="width: 15%;">Remarks</th>
+                <th style="width: 15%;">State</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1. Shamel G. Camposano</td>
+                <td>2023-00323-ST-0</td>
+                <td>April 20, 2026 | 8:00 AM</td>
+                <td>ITECH</td>
+                <td>
+                  <div class="dropdown">
+                    <span class="badge-custom bg-present editable-remark dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <span>Present</span> <i class="bi bi-chevron-down ms-2" style="font-size: 0.65rem;"></i>
+                    </span>
+                    <ul class="dropdown-menu border-0 remarks-dropdown">
+                      <li><button class="dropdown-item text-success" type="button"
+                          onclick="changeRemark(this, 'Present', 'bg-present')"><i
+                            class="bi bi-check-circle me-2"></i>Present</button></li>
+                      <li><button class="dropdown-item text-warning" type="button"
+                          onclick="changeRemark(this, 'Late', 'bg-late')"><i class="bi bi-clock me-2"></i>Late</button>
+                      </li>
+                      <li><button class="dropdown-item text-danger" type="button"
+                          onclick="changeRemark(this, 'Absent', 'bg-absent')"><i
+                            class="bi bi-x-circle me-2"></i>Absent</button></li>
+                      <li><button class="dropdown-item text-primary" type="button"
+                          onclick="changeRemark(this, 'Excused', 'bg-excused')"><i
+                            class="bi bi-envelope-paper me-2"></i>Excused</button></li>
+                    </ul>
+                  </div>
+                </td>
+                <td><span class="badge-custom bg-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>2. Jodiel Mhae B. Mores</td>
+                <td>2023-00008-ST-0</td>
+                <td>April 20, 2026 | 8:05 AM</td>
+                <td>ITECH</td>
+                <td>
+                  <div class="dropdown">
+                    <span class="badge-custom bg-late editable-remark dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <span>Late</span> <i class="bi bi-chevron-down ms-2" style="font-size: 0.65rem;"></i>
+                    </span>
+                    <ul class="dropdown-menu border-0 remarks-dropdown">
+                      <li><button class="dropdown-item text-success" type="button"
+                          onclick="changeRemark(this, 'Present', 'bg-present')"><i
+                            class="bi bi-check-circle me-2"></i>Present</button></li>
+                      <li><button class="dropdown-item text-warning" type="button"
+                          onclick="changeRemark(this, 'Late', 'bg-late')"><i class="bi bi-clock me-2"></i>Late</button>
+                      </li>
+                      <li><button class="dropdown-item text-danger" type="button"
+                          onclick="changeRemark(this, 'Absent', 'bg-absent')"><i
+                            class="bi bi-x-circle me-2"></i>Absent</button></li>
+                      <li><button class="dropdown-item text-primary" type="button"
+                          onclick="changeRemark(this, 'Excused', 'bg-excused')"><i
+                            class="bi bi-envelope-paper me-2"></i>Excused</button></li>
+                    </ul>
+                  </div>
+                </td>
+                <td><span class="badge-custom bg-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>3. Angeline Eunice J. Cabanes</td>
+                <td>2023-00322-ST-0</td>
+                <td>April 20, 2026 | 8:45 AM</td>
+                <td>ITECH</td>
+                <td>
+                  <div class="dropdown">
+                    <span class="badge-custom bg-absent editable-remark dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <span>Absent</span> <i class="bi bi-chevron-down ms-2" style="font-size: 0.65rem;"></i>
+                    </span>
+                    <ul class="dropdown-menu border-0 remarks-dropdown">
+                      <li><button class="dropdown-item text-success" type="button"
+                          onclick="changeRemark(this, 'Present', 'bg-present')"><i
+                            class="bi bi-check-circle me-2"></i>Present</button></li>
+                      <li><button class="dropdown-item text-warning" type="button"
+                          onclick="changeRemark(this, 'Late', 'bg-late')"><i class="bi bi-clock me-2"></i>Late</button>
+                      </li>
+                      <li><button class="dropdown-item text-danger" type="button"
+                          onclick="changeRemark(this, 'Absent', 'bg-absent')"><i
+                            class="bi bi-x-circle me-2"></i>Absent</button></li>
+                      <li><button class="dropdown-item text-primary" type="button"
+                          onclick="changeRemark(this, 'Excused', 'bg-excused')"><i
+                            class="bi bi-envelope-paper me-2"></i>Excused</button></li>
+                    </ul>
+                  </div>
+                </td>
+                <td><span class="badge-custom bg-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>4. Patricia M. Falible</td>
+                <td>2023-00352-ST-0</td>
+                <td>April 20, 2026 | 7:53 AM</td>
+                <td>ITECH</td>
+                <td>
+                  <div class="dropdown">
+                    <span class="badge-custom bg-present editable-remark dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      <span>Present</span> <i class="bi bi-chevron-down ms-2" style="font-size: 0.65rem;"></i>
+                    </span>
+                    <ul class="dropdown-menu border-0 remarks-dropdown">
+                      <li><button class="dropdown-item text-success" type="button"
+                          onclick="changeRemark(this, 'Present', 'bg-present')"><i
+                            class="bi bi-check-circle me-2"></i>Present</button></li>
+                      <li><button class="dropdown-item text-warning" type="button"
+                          onclick="changeRemark(this, 'Late', 'bg-late')"><i class="bi bi-clock me-2"></i>Late</button>
+                      </li>
+                      <li><button class="dropdown-item text-danger" type="button"
+                          onclick="changeRemark(this, 'Absent', 'bg-absent')"><i
+                            class="bi bi-x-circle me-2"></i>Absent</button></li>
+                      <li><button class="dropdown-item text-primary" type="button"
+                          onclick="changeRemark(this, 'Excused', 'bg-excused')"><i
+                            class="bi bi-envelope-paper me-2"></i>Excused</button></li>
+                    </ul>
+                  </div>
+                </td>
+                <td><span class="badge-custom bg-active">Active</span></td>
+              </tr>
+              <tr>
+                <td>5. Jhie Ann Pearl D. Villarosa</td>
+                <td>2023-00021-ST-0</td>
+                <td>June 1, 2026 | 8:02 AM</td>
+                <td>ITECH</td>
+                <td>
+                  <span class="badge-custom bg-late">Late</span>
+                </td>
+                <td><span class="badge-custom bg-disabled">Disabled</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div class="modal fade logout-modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content shadow-lg">
+        <div class="modal-body text-center p-4">
+          <i class="bi bi-box-arrow-right" style="font-size: 3rem; color: var(--bs-maroon);"></i>
+          <h5 class="mt-3 fw-bold">Sign Out</h5>
+          <p class="text-muted mb-4">Are you sure you want to log out?</p>
+          <div class="d-flex justify-content-center gap-2">
+            <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
+            <a href="../index.html" class="btn btn-maroon px-4">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<div id="main" class="flex-grow-1 d-flex flex-column">
-		<header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
-			<div class="container-fluid px-0">
-				<span class="navbar-brand text-dark m-0 fs-3 fw-bold">MoniQR</span>
-				<div class="ms-auto d-flex align-items-center gap-4">
-					<span class="text-muted d-none d-sm-inline" id="topbar-date"></span>
-					<div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm"
-						style="width: 45px; height: 45px; cursor: pointer;">
-						<i class="bi bi-person-fill fs-4" style="color: #7B1C2C;"></i>
-					</div>
-				</div>
-			</div>
-		</header>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 
-		<main class="p-4 p-lg-5">
-			<div class="header-section">
-				<div>
-					<div class="d-flex align-items-center">
-						<a href="dashboard.html" class="back-circle"><i class="bi bi-chevron-right"></i></a>
-						<h1 class="subject-title">OJT</h1>
-					</div>
-					<p class="enrolled-text pt-2">54 Students Enrolled</p>
-				</div>
-				<div class="d-flex gap-3">
-					<button class="btn btn-maroon"><i class="bi bi-qr-code-scan me-2"></i>Scan QR Code</button>
-					<button class="btn btn-maroon"><i class="bi bi-bar-chart-fill me-2"></i>Generate Report</button>
-				</div>
-			</div>
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      document.getElementById('topbar-date').textContent = now.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      document.getElementById('topbar-time').textContent = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
 
-			<div class="data-card">
-				<div class="table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th style="width: 30%;">Name</th>
-								<th style="width: 20%;">Student ID</th>
-								<th style="width: 20%;">Last Attendance</th>
-								<th style="width: 15%;">Remarks</th>
-								<th style="width: 15%;">State</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1. Shamel G. Camposano</td>
-								<td>2023-00323-ST-0</td>
-								<td>April 20, 2026 | 8:00 AM</td>
-								<td><span class="badge-custom bg-present">Present</span></td>
-								<td><span class="badge-custom bg-active">Active</span></td>
-							</tr>
-							<tr>
-								<td>2. Jodiel Mhae B. Mores</td>
-								<td>2023-00008-ST-0</td>
-								<td>April 20, 2026 | 8:05 AM</td>
-								<td><span class="badge-custom bg-late">Late</span></td>
-								<td><span class="badge-custom bg-active">Active</span></td>
-							</tr>
-							<tr>
-								<td>3. Angeline Eunice J. Cabanes</td>
-								<td>2023-00322-ST-0</td>
-								<td>April 20, 2026 | 8:45 AM</td>
-								<td><span class="badge-custom bg-absent">Absent</span></td>
-								<td><span class="badge-custom bg-active">Active</span></td>
-							</tr>
-							<tr>
-								<td>4. Patricia M. Falible</td>
-								<td>2023-00352-ST-0</td>
-								<td>April 20, 2026 | 7:53 AM</td>
-								<td><span class="badge-custom bg-present">Present</span></td>
-								<td><span class="badge-custom bg-active">Active</span></td>
-							</tr>
-							<tr>
-								<td>5. Jhie Ann Pearl D. Villarosa</td>
-								<td>2023-00021-ST-0</td>
-								<td>June 1, 2026 | 8:02 AM</td>
-								<td><span class="badge-custom bg-late">Late</span></td>
-								<td><span class="badge-custom bg-disabled">Disabled</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-		</main>
-	</div>
+    function changeRemark(element, newStatusText, newClass) {
+      const dropdownContainer = element.closest('.dropdown');
+      const mainBadge = dropdownContainer.querySelector('.editable-remark');
+      mainBadge.classList.remove('bg-present', 'bg-late', 'bg-absent', 'bg-excused');
 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-	<script>
-		document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('en-US', {
-			weekday: 'short',
-			month: 'long',
-			day: 'numeric',
-			year: 'numeric'
-		});
-	</script>
+      mainBadge.classList.add(newClass);
+
+      const textSpan = mainBadge.querySelector('span');
+      textSpan.textContent = newStatusText;
+    }
+  </script>
 </body>
 
 </html>
