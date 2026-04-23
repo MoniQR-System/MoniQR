@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Module</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bs-maroon: #7B1C2C;
+      --bs-maroon-light: #f0e6e8;
+      --sidebar-width: 85px;
+      --sidebar-expanded: 260px;
+      --transition-speed: 0.3s;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: #f4f7f6;
+      overflow-x: hidden;
+    }
+
+    #sidebar {
+      width: var(--sidebar-width);
+      transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1030;
+      background-color: var(--bs-maroon);
+      overflow: hidden;
+    }
+
+    #sidebar:hover {
+      width: var(--sidebar-expanded);
+    }
+
+    .sidebar-logo-img {
+      width: 0;
+      height: auto;
+      max-height: 140px;
+      object-fit: contain;
+      opacity: 0;
+      transition: all 0.3s ease;
+      transform: scale(0.6);
+      display: block;
+      margin: 30px auto;
+    }
+
+    #sidebar:hover .sidebar-logo-img {
+      width: 200px;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .nav-label {
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      white-space: nowrap;
+      font-size: 1.1rem;
+    }
+
+    #sidebar:hover .nav-label {
+      opacity: 1;
+    }
+
+    .nav-link {
+      transition: all 0.2s ease;
+      border-left: 4px solid transparent;
+    }
+
+    .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+      border-left-color: #fff;
+    }
+
+    #main {
+      margin-left: var(--sidebar-width);
+      transition: margin-left var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 100vh;
+    }
+
+    #sidebar:hover+#main {
+      margin-left: var(--sidebar-expanded);
+    }
+
+    .profile-dropdown-menu {
+      border-radius: 15px;
+      overflow: hidden;
+      min-width: 200px;
+    }
+
+    .profile-dropdown-menu .dropdown-item {
+      padding: 0.6rem 1.2rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .profile-dropdown-menu .dropdown-item:hover {
+      background-color: var(--bs-maroon-light);
+      color: var(--bs-maroon);
+    }
+
+    .profile-dropdown-menu .dropdown-item i {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .profile-card {
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .profile-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #dee2e6;
+      background-color: #f8f9fa;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .profile-name-bar {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .profile-name-bar h5 {
+      color: #dc3545;
+      font-weight: 700;
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .profile-body {
+      padding: 1.5rem;
+    }
+
+    .field-label {
+      color: #555;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .field-value {
+      font-weight: 700;
+      color: #222;
+      font-size: 0.95rem;
+    }
+
+    .form-control {
+      font-size: 0.95rem;
+      border-color: #ced4da;
+    }
+
+    .form-control:focus {
+      border-color: var(--bs-maroon);
+      box-shadow: 0 0 0 0.25rem rgba(123, 28, 44, 0.25);
+    }
+
+    .form-control[readonly] {
+      background-color: #fbfbfb;
+      color: #555;
+    }
+
+    .certify-box {
+      border: 1px solid #dee2e6;
+      border-left: 6px solid #198754;
+      border-radius: 4px;
+      padding: 1.25rem;
+      background-color: #fff;
+      margin-top: 1.5rem;
+    }
+
+    .profile-footer {
+      padding: 1rem 1.5rem;
+      background-color: #f8f9fa;
+      border-top: 1px solid #dee2e6;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
+
+    .btn-save {
+      background-color: #8A0000;
+      color: white;
+      font-weight: 500;
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+
+    .btn-save:hover {
+      background-color: #610000;
+      color: white;
+    }
+  </style>
+</head>
+
+<body class="d-flex">
+  <nav id="sidebar" class="vh-100 position-fixed start-0 top-0 d-flex flex-column text-white shadow">
+    <div class="d-flex align-items-center px-3" style="min-height: 150px;">
+      <div class="w-100 text-center">
+        <img src="../img/logo1.png" alt="Logo" class="sidebar-logo-img">
+      </div>
+    </div>
+    <div class="flex-grow-1 pt-2">
+      <a href="dashboard.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-grid-1x2 fs-3"></i></div>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="#" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-clipboard-data fs-3"></i>
+        </div>
+        <span class="nav-label">Reports</span>
+      </a>
+      <a href="archived.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-archive fs-3"></i></div>
+        <span class="nav-label">Archived Subject</span>
+      </a>
+    </div>
+    <div class="pb-4">
+      <a href="logout.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-box-arrow-left fs-3"></i>
+        </div>
+        <span class="nav-label">Sign Out</span>
+      </a>
+    </div>
+  </nav>
+
+  <div id="main" class="flex-grow-1 d-flex flex-column">
+    <header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
+      <div class="container-fluid px-0">
+        <span class="navbar-brand text-dark m-0 fs-3 fw-bold">MoniQR</span>
+        <div class="ms-auto d-flex align-items-center gap-4">
+          <div class="text-muted d-none d-sm-flex align-items-center">
+            <span id="topbar-date"></span>
+            <span class="mx-2">|</span>
+            <span id="topbar-time"></span>
+          </div>
+
+          <div class="dropdown">
+            <div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm"
+              style="width: 45px; height: 45px; cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-fill fs-4" style="color: #7B1C2C;"></i>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-end shadow border-0 profile-dropdown-menu mt-2">
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-2" href="profile.html">
+                  <i class="bi bi-person text-muted"></i> Profile
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center gap-2" href="changepass.html">
+                  <i class="bi bi-shield-lock text-muted"></i> Change Password
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="p-4 p-lg-5">
+      <div class="profile-card">
+        <div class="profile-header">
+          <h4 class="mb-0 text-dark" style="font-weight: 500;">Personal Data</h4>
+        </div>
+        <div class="profile-name-bar">
+          <h5>CAMPOSANO, SHAMEL GALICIA (2023-00323-ST-0)</h5>
+        </div>
+        <div class="profile-body">
+          <div class="row gx-5">
+            <div class="col-lg-6">
+              <div class="row mb-3 align-items-center">
+                <div class="col-sm-4 field-label">Student Number</div>
+                <div class="col-sm-8 field-value">2023-00323-ST-0</div>
+              </div>
+              <div class="row mb-3 align-items-center">
+                <div class="col-sm-4 field-label">Name</div>
+                <div class="col-sm-8 field-value">CAMPOSANO, SHAMEL GALICIA</div>
+              </div>
+              <div class="row mb-3 align-items-center">
+                <div class="col-sm-4 field-label">Gender</div>
+                <div class="col-sm-8 field-value">Female</div>
+              </div>
+              <div class="row mb-4 align-items-center">
+                <div class="col-sm-4 field-label">Date of Birth</div>
+                <div class="col-sm-8 field-value">January 07, 2005</div>
+              </div>
+              <div class="row mb-4 align-items-center">
+                <div class="col-sm-4 field-label">Place of Birth</div>
+                <div class="col-sm-8 field-value">CITY OF STO. TOMAS, Philippines (the)</div>
+              </div>
+              <div class="row mb-3 align-items-center">
+                <div class="col-sm-4 field-label">Mobile No.</div>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" value="09275049335">
+                </div>
+              </div>
+              <div class="row mb-3 align-items-center">
+                <div class="col-sm-4 field-label">Email Address</div>
+                <div class="col-sm-8">
+                  <input type="email" class="form-control" value="shamelgcamposano@gmail.com">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row mb-3">
+                <div class="col-sm-4 field-label pt-1">
+                  Residential Address<br>
+                  <span class="text-muted fw-normal" style="font-size: 0.75rem;">(Where you stay while you are studying
+                    in PUP)</span>
+                </div>
+                <div class="col-sm-8">
+                  <textarea class="form-control"
+                    rows="2">Purok 7 Barangay Santiago Sto. Tomas Batangas, Brgy. Santiago, CITY OF STO. TOMAS, Philippines (the)</textarea>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-sm-4 field-label pt-1">Permanent Address</div>
+                <div class="col-sm-8">
+                  <textarea class="form-control" rows="2" placeholder="Provincial Address"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="profile-footer">
+            <button class="btn btn-save">Save</button>
+          </div>
+        </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      document.getElementById('topbar-date').textContent = now.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      document.getElementById('topbar-time').textContent = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); 
+  </script>
+</body>
+
+</html>
