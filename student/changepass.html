@@ -25,7 +25,6 @@
       overflow-x: hidden;
     }
 
-    /* --- SIDEBAR CSS --- */
     #sidebar {
       width: var(--sidebar-width);
       transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
@@ -91,7 +90,6 @@
       margin-left: var(--sidebar-expanded);
     }
 
-    /* --- Profile Dropdown Custom Styling --- */
     .profile-dropdown-menu {
       border-radius: 15px;
       overflow: hidden;
@@ -115,7 +113,6 @@
       text-align: center;
     }
 
-    /* --- PROFILE / CHANGE PASS SPECIFIC STYLES --- */
     .profile-card {
       border: 1px solid #dee2e6;
       border-radius: 4px;
@@ -130,7 +127,6 @@
 
     .profile-name-bar h5 {
       color: #dc3545;
-      /* Reddish tone from the image */
       font-weight: 700;
       margin: 0;
       font-size: 1.1rem;
@@ -158,7 +154,6 @@
       padding: 0 1.25rem;
     }
 
-    /* Flips the bootstrap key to visually match the image icon */
     .key-icon {
       transform: scaleX(-1) rotate(45deg);
       font-size: 1.1rem;
@@ -174,7 +169,6 @@
 
     .btn-save {
       background-color: #8A0000;
-      /* Darker maroon from the image */
       color: white;
       font-weight: 500;
       padding: 0.5rem 1.5rem;
@@ -187,11 +181,25 @@
       background-color: #610000;
       color: white;
     }
+
+    .logout-modal .modal-content {
+      border-radius: 15px;
+      border: none;
+    }
+
+    .btn-maroon {
+      background-color: var(--bs-maroon);
+      color: white;
+    }
+
+    .btn-maroon:hover {
+      background-color: #5c1421;
+      color: white;
+    }
   </style>
 </head>
 
 <body class="d-flex">
-  <!-- SIDEBAR -->
   <nav id="sidebar" class="vh-100 position-fixed start-0 top-0 d-flex flex-column text-white shadow">
     <div class="d-flex align-items-center px-3" style="min-height: 150px;">
       <div class="w-100 text-center">
@@ -199,7 +207,6 @@
       </div>
     </div>
     <div class="flex-grow-1 pt-2">
-      <!-- Removed 'active' classes so it doesn't highlight wrong tabs while in settings -->
       <a href="dashboard.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
         <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-grid-1x2 fs-3"></i></div>
         <span class="nav-label">Dashboard</span>
@@ -215,17 +222,31 @@
       </a>
     </div>
     <div class="pb-4">
-      <a href="logout.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
+      <a class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75" data-bs-toggle="modal"
+        data-bs-target="#logoutModal">
         <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-box-arrow-left fs-3"></i>
         </div>
         <span class="nav-label">Sign Out</span>
       </a>
     </div>
   </nav>
-
-  <!-- MAIN CONTENT -->
+  <div class="modal fade logout-modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content shadow-lg">
+        <div class="modal-body text-center p-4">
+          <i class="bi bi-box-arrow-right" style="font-size: 3rem; color: var(--bs-maroon);"></i>
+          <h5 class="mt-3 fw-bold">Sign Out</h5>
+          <p class="text-muted mb-4">Are you sure you want to log out?</p>
+          <div class="d-flex justify-content-center gap-2">
+            <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Cancel</button>
+            <a href="../index.html" class="btn btn-maroon px-4">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="main" class="flex-grow-1 d-flex flex-column">
-    <!-- NAVBAR -->
     <header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
       <div class="container-fluid px-0">
         <span class="navbar-brand text-dark m-0 fs-3 fw-bold">MoniQR</span>
@@ -235,8 +256,6 @@
             <span class="mx-2">|</span>
             <span id="topbar-time"></span>
           </div>
-
-          <!-- PROFILE DROPDOWN -->
           <div class="dropdown">
             <div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm"
               style="width: 45px; height: 45px; cursor: pointer;" data-bs-toggle="dropdown" aria-expanded="false">
@@ -258,40 +277,27 @@
         </div>
       </div>
     </header>
-
-    <!-- CHANGE PASSWORD CONTENT -->
     <main class="p-4 p-lg-5">
-
-      <!-- Page Title -->
       <h3 class="mb-3 text-dark" style="font-weight: 400; font-size: 1.6rem;">Change Password</h3>
-
       <div class="profile-card">
-
-        <!-- Sub Header (Name Bar) -->
         <div class="profile-name-bar">
           <h5>CAMPOSANO, SHAMEL GALICIA (2023-00323-ST-0)</h5>
         </div>
-
-        <!-- Form Body -->
         <div class="profile-body">
           <div class="row">
-            <!-- Constraining width to match reference -->
             <div class="col-12 col-md-8 col-lg-5">
-
               <div class="input-group mb-3">
                 <input type="password" class="form-control" placeholder="Old Password" aria-label="Old Password">
                 <span class="input-group-text">
                   <i class="bi bi-key-fill key-icon text-dark opacity-75"></i>
                 </span>
               </div>
-
               <div class="input-group mb-3">
                 <input type="password" class="form-control" placeholder="New Password" aria-label="New Password">
                 <span class="input-group-text">
                   <i class="bi bi-key-fill key-icon text-dark opacity-75"></i>
                 </span>
               </div>
-
               <div class="input-group mb-2">
                 <input type="password" class="form-control" placeholder="Confirm Password"
                   aria-label="Confirm Password">
@@ -303,28 +309,22 @@
             </div>
           </div>
         </div>
-
-        <!-- Footer / Action Area -->
         <div class="profile-footer">
           <button class="btn btn-save">Change Password</button>
         </div>
-
       </div>
     </main>
   </div>
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script>
     function updateDateTime() {
       const now = new Date();
-
       document.getElementById('topbar-date').textContent = now.toLocaleDateString('en-US', {
         weekday: 'short',
         month: 'long',
         day: 'numeric',
         year: 'numeric'
       });
-
       document.getElementById('topbar-time').textContent = now.toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
@@ -332,7 +332,6 @@
         hour12: true
       });
     }
-
     setInterval(updateDateTime, 1000);
     updateDateTime(); 
   </script>
