@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Module</title>
+  <title>Faculty Module</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
     rel="stylesheet" />
@@ -69,6 +69,7 @@
     .nav-link {
       transition: all 0.2s ease;
       border-left: 4px solid transparent;
+      cursor: pointer;
     }
 
     .nav-link:hover {
@@ -137,86 +138,6 @@
       gap: 3px;
     }
 
-    .attendance-modal .modal-content {
-      border-radius: 30px;
-      border: none;
-      background-color: #ececec;
-      padding: 20px;
-    }
-
-    .stat-card {
-      background: white;
-      border-radius: 20px;
-      padding: 15px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    }
-
-    .stat-value {
-      font-size: 2rem;
-      font-weight: 800;
-    }
-
-    .history-container {
-      background: #dadada;
-      border-radius: 25px;
-      padding: 25px;
-      margin-top: 20px;
-    }
-
-    .attendance-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 15px;
-      position: relative;
-    }
-
-    .status-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      margin-right: 15px;
-      z-index: 2;
-    }
-
-    .timeline-line {
-      position: absolute;
-      left: 5px;
-      top: 0;
-      bottom: -15px;
-      width: 2px;
-      background: #999;
-      z-index: 1;
-    }
-
-    .attendance-item:last-child .timeline-line {
-      display: none;
-    }
-
-    .attendance-time {
-      text-align: center;
-      flex: 1;
-    }
-
-    .attendance-date {
-      flex: 1;
-    }
-
-    .attendance-status {
-      width: 100px;
-      text-align: right;
-    }
-
-    .btn-see-more {
-      background: white;
-      border-radius: 20px;
-      padding: 5px 25px;
-      border: none;
-      font-weight: 600;
-      display: block;
-      margin: 10px auto 0;
-    }
-
     .profile-dropdown-menu {
       border-radius: 15px;
       overflow: hidden;
@@ -254,6 +175,70 @@
       background-color: #5c1421;
       color: white;
     }
+
+    .report-modal .modal-content {
+      border-radius: 30px;
+      border: none;
+      padding: 10px;
+    }
+
+    .report-block {
+      background-color: #f3f3f3;
+      border-radius: 25px;
+      padding: 2.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e5e5e5;
+    }
+
+    .report-stat-card {
+      background: linear-gradient(145deg, #f0f0f0, #e6e6e6);
+      border-radius: 18px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.08), inset -2px -2px 5px rgba(0, 0, 0, 0.02), inset 2px 2px 5px rgba(255, 255, 255, 0.5);
+      border: 1px solid #dfdfdf;
+      flex: 1;
+    }
+
+    .report-stat-title {
+      font-size: 0.95rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .report-stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .val-present { color: #1fa450; }
+    .val-absent { color: #9c2727; }  
+    .val-late { color: #f28b00; }   
+    .val-excuse { color: #b7b700; }  
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .report-table th {
+      color: #222;
+      font-weight: 500;
+      padding: 1.2rem 0.5rem;
+      border-bottom: 2px solid #ddd;
+    }
+
+    .report-table td {
+      padding: 1.2rem 0.5rem;
+      border-bottom: 1px solid #e5e5e5;
+      color: #333;
+      vertical-align: middle;
+    }
+
+    .report-table tr:last-child td {
+      border-bottom: none;
+    }
   </style>
 </head>
 
@@ -285,6 +270,8 @@
       </a>
     </div>
   </nav>
+
+  <!-- LOGOUT MODAL -->
   <div class="modal fade logout-modal" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -301,7 +288,9 @@
       </div>
     </div>
   </div>
+
   <div id="main" class="flex-grow-1 d-flex flex-column">
+
     <header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
       <div class="container-fluid px-0">
         <span class="navbar-brand text-dark m-0 fs-3 fw-bold">MoniQR</span>
@@ -332,277 +321,374 @@
         </div>
       </div>
     </header>
+
     <main class="p-4 p-lg-5">
       <h2 class="mb-4 fw-bold">My Archived Folders</h2>
       <div class="row g-4">
+
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="archive-card" data-bs-toggle="modal" data-bs-target="#mmwModal">
+          <div class="archive-card" data-bs-toggle="modal" data-bs-target="#mmwReportModal">
             <i class="bi bi-folder-fill folder-icon"></i>
             <div class="subject-code">INTE 001 – MMW</div>
-            <div class="prof-name"><i class="bi bi-people-fill me-1"></i>50 Students</div>
+            <div class="prof-name"><i class="bi bi-people-fill me-1"></i>52 Students</div>
             <div class="archive-date">
               <i class="bi bi-calendar"> MWF | 1:00 PM - 5:00 PM</i>
             </div>
           </div>
         </div>
+
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="archive-card" data-bs-toggle="modal" data-bs-target="#adetModal">
+          <div class="archive-card" data-bs-toggle="modal" data-bs-target="#adetReportModal">
             <i class="bi bi-folder-fill folder-icon"></i>
             <div class="subject-code">COMP 005 – ADET</div>
-            <div class="prof-name"><i class="bi bi-people-fill me-1"></i>52 Students</div>
+            <div class="prof-name"><i class="bi bi-people-fill me-1"></i>50 Students</div>
             <div class="archive-date">
               <i class="bi bi-calendar"></i> S | 1:00 PM - 5:00 PM
             </div>
           </div>
         </div>
+
         <div class="col-12 col-md-6 col-lg-4">
-          <div class="archive-card" data-bs-toggle="modal" data-bs-target="#sadModal">
+          <div class="archive-card" data-bs-toggle="modal" data-bs-target="#webdevReportModal">
             <i class="bi bi-folder-fill folder-icon"></i>
-            <div class="subject-code">COMP 003 – MM</div>
-            <div class="prof-name"><i class="bi bi-people-fill me-1"></i>52 Students</div>
+            <div class="subject-code">COMP 003 – WEBDEV</div>
+            <div class="prof-name"><i class="bi bi-people-fill me-1"></i>55 Students</div>
             <div class="archive-date">
               <i class="bi bi-archive"></i> T | 1:00 PM - 5:00 PM
             </div>
           </div>
         </div>
+
       </div>
     </main>
   </div>
-  <div class="modal fade attendance-modal" id="mmwModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header border-0 pb-3 pt-2 position-relative">
-          <div class="w-100 d-flex justify-content-between align-items-center pe-4">
-            <div class="text-start">
-              <h3 class="fw-bold mb-1 pt-3 text-dark" style="font-size: 1.6rem;">INTE 001 – MMW</h3>
-              <div class="text-dark" style="font-size: 1.1rem;">MWF | 1:00 PM – 5:00 PM</div>
+
+  <div class="modal fade report-modal" id="mmwReportModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content shadow-lg">
+        <div class="modal-body p-4 p-lg-5">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-4" data-bs-dismiss="modal" aria-label="Close"></button>
+          
+          <div class="report-block">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5">
+              <div>
+                <h1 class="fw-bold mb-1" style="font-size: 2.2rem; color: #111;">MMW</h1>
+                <p class="mb-0 text-dark fs-5">COMP 001 | 1st Semester 2025 | Archived</p>
+              </div>
+              <button class="btn btn-maroon rounded-pill px-4 py-2 mt-3 mt-md-0 d-flex align-items-center">
+                <i class="bi bi-bar-chart-line me-2"></i> Generate Report
+              </button>
             </div>
-            <div class="text-end text-dark pt-3" style="font-size: 1.1rem;">
-              <div class="mb-1">Prof. Ariel Tuazon <i class="bi bi-person-fill ms-1"></i></div>
-              <div class="mb-0">Archived: September 21, 2025 <i class="bi bi-archive ms-1"></i></div>
-            </div>
-          </div>
-          <button type="button" class="btn-close position-absolute top-0 end-0 m-1" data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body pt-3">
-          <div class="row g-3 text-center">
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Total Attendance</div>
-                <div class="stat-value text-dark">30</div>
+
+            <div class="d-flex flex-wrap gap-4 mb-4">
+              <div class="report-stat-card" style="max-width: 220px;">
+                <div class="report-stat-title">Total Students</div>
+                <div class="report-stat-value text-dark">52</div>
+              </div>
+              <div class="report-stat-card" style="max-width: 220px;">
+                <div class="report-stat-title">Total Session</div>
+                <div class="report-stat-value text-dark">90</div>
               </div>
             </div>
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Present</div>
-                <div class="stat-value text-success">28</div>
+
+            <div class="d-flex flex-wrap gap-4">
+              <div class="report-stat-card">
+                <div class="report-stat-title">Present</div>
+                <div class="report-stat-value val-present">4,576</div>
               </div>
-            </div>
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Late</div>
-                <div class="stat-value text-warning">1</div>
+              <div class="report-stat-card">
+                <div class="report-stat-title">Absent</div>
+                <div class="report-stat-value val-absent">1</div>
               </div>
-            </div>
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Absent</div>
-                <div class="stat-value text-danger">1</div>
+              <div class="report-stat-card">
+                <div class="report-stat-title">Late</div>
+                <div class="report-stat-value val-late">1</div>
               </div>
-            </div>
-          </div>
-          <div class="history-container">
-            <h6 class="text-center fw-bold mb-4">History of Attendance</h6>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-success"></div>
-              <div class="attendance-date">August 12, 2025</div>
-              <div class="text-muted attendance-time">1:00 PM</div>
-              <div class="attendance-status text-success fw-bold">PRESENT</div>
-            </div>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-warning"></div>
-              <div class="attendance-date">August 14, 2025</div>
-              <div class="text-muted attendance-time">1:12 PM</div>
-              <div class="attendance-status text-warning fw-bold">LATE</div>
-            </div>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-success"></div>
-              <div class="attendance-date">August 16, 2025</div>
-              <div class="text-muted attendance-time">1:56 PM</div>
-              <div class="attendance-status text-success fw-bold">PRESENT</div>
-            </div>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-danger"></div>
-              <div class="attendance-date">August 19, 2025</div>
-              <div class="text-muted attendance-time">1:45 PM</div>
-              <div class="attendance-status text-danger fw-bold">ABSENT</div>
-            </div>
-            <button class="btn-see-more">See More</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade attendance-modal" id="adetModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header border-0 pb-3 pt-2 position-relative">
-          <div class="w-100 d-flex justify-content-between align-items-center pe-4">
-            <div class="text-start">
-              <h3 class="fw-bold mb-1 pt-3 text-dark" style="font-size: 1.6rem;">COMP 005 – ADET</h3>
-              <div class="text-dark" style="font-size: 1.1rem;">S | 1:00 PM – 5:00 PM</div>
-            </div>
-            <div class="text-end text-dark pt-3" style="font-size: 1.1rem;">
-              <div class="mb-1">Prof. Christopher Jay De Claro <i class="bi bi-person-fill ms-1"></i></div>
-              <div class="mb-0">Archived: April 11, 2025 <i class="bi bi-archive ms-1"></i></div>
-            </div>
-          </div>
-          <button type="button" class="btn-close position-absolute top-0 end-0 m-1" data-bs-dismiss="modal"
-            aria-label="Close"></button>
-        </div>
-        <div class="modal-body pt-3">
-          <div class="row g-3 text-center">
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Total Attendance</div>
-                <div class="stat-value text-dark">30</div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Present</div>
-                <div class="stat-value text-success">28</div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Late</div>
-                <div class="stat-value text-warning">1</div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Absent</div>
-                <div class="stat-value text-danger">1</div>
+              <div class="report-stat-card">
+                <div class="report-stat-title">Excuse</div>
+                <div class="report-stat-value val-excuse">0</div>
               </div>
             </div>
           </div>
-          <div class="history-container">
-            <h6 class="text-center fw-bold mb-4">History of Attendance</h6>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-success"></div>
-              <div class="attendance-date">April 12, 2025</div>
-              <div class="text-muted attendance-time">1:00 PM</div>
-              <div class="attendance-status text-success fw-bold">PRESENT</div>
+
+          <div class="report-block mb-0">
+            <div class="table-responsive">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th style="width: 35%;">Name</th>
+                    <th style="width: 25%;">Student ID</th>
+                    <th class="text-center" style="width: 10%;">Present</th>
+                    <th class="text-center" style="width: 10%;">Late</th>
+                    <th class="text-center" style="width: 10%;">Absent</th>
+                    <th class="text-center" style="width: 10%;">Excuse</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1. Shamel G. Camposano</td>
+                    <td>2023-0323-ST-0</td>
+                    <td class="text-center">4,576</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">0</td>
+                  </tr>
+                  <tr>
+                    <td>2. Jodiel Mhae B. Mores</td>
+                    <td>2023-00008-ST-0</td>
+                    <td class="text-center">4,576</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">0</td>
+                  </tr>
+                  <tr>
+                    <td>3. Angeline Eunice J. Cabanes</td>
+                    <td>2023-00322-ST-0</td>
+                    <td class="text-center">4,576</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">0</td>
+                  </tr>
+                  <tr>
+                    <td>4. Patricia M. Falible</td>
+                    <td>2023-00352-ST-0</td>
+                    <td class="text-center">4,576</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">0</td>
+                  </tr>
+                  <tr>
+                    <td>5. Jhie Ann Pearl D. Villarosa</td>
+                    <td>2023-00021-ST-0</td>
+                    <td class="text-center">4,576</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">1</td>
+                    <td class="text-center">0</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-warning"></div>
-              <div class="attendance-date">April 19, 2025</div>
-              <div class="text-muted attendance-time">1:12 PM</div>
-              <div class="attendance-status text-warning fw-bold">LATE</div>
-            </div>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-success"></div>
-              <div class="attendance-date">April 26, 2025</div>
-              <div class="text-muted attendance-time">1:56 PM</div>
-              <div class="attendance-status text-success fw-bold">PRESENT</div>
-            </div>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-danger"></div>
-              <div class="attendance-date">March 2, 2025</div>
-              <div class="text-muted attendance-time">1:45 PM</div>
-              <div class="attendance-status text-danger fw-bold">ABSENT</div>
-            </div>
-            <button class="btn-see-more">See More</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade attendance-modal" id="sadModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header border-0 pb-3 pt-2 position-relative">
-          <div class="w-100 d-flex justify-content-between align-items-center pe-4">
-            <div class="text-start">
-              <h3 class="fw-bold mb-1 pt-3 text-dark" style="font-size: 1.6rem;">COMP 003 - SAD</h3>
-              <div class="text-dark" style="font-size: 1.1rem;">T | 1:00 PM – 5:00 PM</div>
+
+  <div class="modal fade report-modal" id="adetReportModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content shadow-lg">
+        <div class="modal-body p-4 p-lg-5">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-4" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          <div class="report-block">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5">
+              <div>
+                <h1 class="fw-bold mb-1" style="font-size: 2.2rem; color: #111;">ADET</h1>
+                <p class="mb-0 text-dark fs-5">COMP 001 | 1st Semester 2025 | Archived</p>
+              </div>
+              <button class="btn btn-maroon rounded-pill px-4 py-2 mt-3 mt-md-0 d-flex align-items-center">
+                <i class="bi bi-bar-chart-line me-2"></i> Generate Report
+              </button>
             </div>
-            <div class="text-end text-dark pt-3" style="font-size: 1.1rem;">
-              <div class="mb-1">Prof. Melanie L. Castillo <i class="bi bi-person-fill ms-1"></i></div>
-              <div class="mb-0">Archived: December 3, 2025 <i class="bi bi-archive ms-1"></i></div>
+
+            <div class="d-flex flex-wrap gap-4 mb-4">
+              <div class="report-stat-card" style="max-width: 220px;">
+                <div class="report-stat-title">Total Students</div>
+                <div class="report-stat-value text-dark">50</div>
+              </div>
+              <div class="report-stat-card" style="max-width: 220px;">
+                <div class="report-stat-title">Total Session</div>
+                <div class="report-stat-value text-dark">88</div>
+              </div>
+            </div>
+
+            <div class="d-flex flex-wrap gap-4">
+              <div class="report-stat-card">
+                <div class="report-stat-title">Present</div>
+                <div class="report-stat-value val-present">4,400</div>
+              </div>
+              <div class="report-stat-card">
+                <div class="report-stat-title">Absent</div>
+                <div class="report-stat-value val-absent">2</div>
+              </div>
+              <div class="report-stat-card">
+                <div class="report-stat-title">Late</div>
+                <div class="report-stat-value val-late">0</div>
+              </div>
+              <div class="report-stat-card">
+                <div class="report-stat-title">Excuse</div>
+                <div class="report-stat-value val-excuse">3</div>
+              </div>
             </div>
           </div>
-          <button type="button" class="btn-close position-absolute top-0 end-0 m-1" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+
+          <div class="report-block mb-0">
+            <div class="table-responsive">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th style="width: 35%;">Name</th>
+                    <th style="width: 25%;">Student ID</th>
+                    <th class="text-center" style="width: 10%;">Present</th>
+                    <th class="text-center" style="width: 10%;">Late</th>
+                    <th class="text-center" style="width: 10%;">Absent</th>
+                    <th class="text-center" style="width: 10%;">Excuse</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1. Shamel G. Camposano</td>
+                    <td>2023-0323-ST-0</td>
+                    <td class="text-center">4,400</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">3</td>
+                  </tr>
+                  <tr>
+                    <td>2. Jodiel Mhae B. Mores</td>
+                    <td>2023-00008-ST-0</td>
+                    <td class="text-center">4,400</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">3</td>
+                  </tr>
+                  <tr>
+                    <td>3. Angeline Eunice J. Cabanes</td>
+                    <td>2023-00322-ST-0</td>
+                    <td class="text-center">4,400</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">3</td>
+                  </tr>
+                  <tr>
+                    <td>4. Patricia M. Falible</td>
+                    <td>2023-00352-ST-0</td>
+                    <td class="text-center">4,400</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">3</td>
+                  </tr>
+                  <tr>
+                    <td>5. Jhie Ann Pearl D. Villarosa</td>
+                    <td>2023-00021-ST-0</td>
+                    <td class="text-center">4,400</td>
+                    <td class="text-center">0</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">3</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-        <div class="modal-body pt-3">
-          <div class="row g-3 text-center">
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Total Attendance</div>
-                <div class="stat-value text-dark">30</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade report-modal" id="webdevReportModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content shadow-lg">
+        <div class="modal-body p-4 p-lg-5">
+          <button type="button" class="btn-close position-absolute top-0 end-0 m-4" data-bs-dismiss="modal" aria-label="Close"></button>
+
+          <div class="report-block">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5">
+              <div>
+                <h1 class="fw-bold mb-1" style="font-size: 2.2rem; color: #111;">WEBDEV</h1>
+                <p class="mb-0 text-dark fs-5">COMP 001 | 1st Semester 2025 | Archived</p>
+              </div>
+              <button class="btn btn-maroon rounded-pill px-4 py-2 mt-3 mt-md-0 d-flex align-items-center">
+                <i class="bi bi-bar-chart-line me-2"></i> Generate Report
+              </button>
+            </div>
+
+            <div class="d-flex flex-wrap gap-4 mb-4">
+              <div class="report-stat-card" style="max-width: 220px;">
+                <div class="report-stat-title">Total Students</div>
+                <div class="report-stat-value text-dark">55</div>
+              </div>
+              <div class="report-stat-card" style="max-width: 220px;">
+                <div class="report-stat-title">Total Session</div>
+                <div class="report-stat-value text-dark">95</div>
               </div>
             </div>
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Present</div>
-                <div class="stat-value text-success">28</div>
+
+            <div class="d-flex flex-wrap gap-4">
+              <div class="report-stat-card">
+                <div class="report-stat-title">Present</div>
+                <div class="report-stat-value val-present">5,525</div>
               </div>
-            </div>
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Late</div>
-                <div class="stat-value text-warning">1</div>
+              <div class="report-stat-card">
+                <div class="report-stat-title">Absent</div>
+                <div class="report-stat-value val-absent">4</div>
               </div>
-            </div>
-            <div class="col-3">
-              <div class="stat-card">
-                <div class="small text-muted fw-bold">Absent</div>
-                <div class="stat-value text-danger">1</div>
+              <div class="report-stat-card">
+                <div class="report-stat-title">Late</div>
+                <div class="report-stat-value val-late">2</div>
+              </div>
+              <div class="report-stat-card">
+                <div class="report-stat-title">Excuse</div>
+                <div class="report-stat-value val-excuse">1</div>
               </div>
             </div>
           </div>
-          <div class="history-container">
-            <h6 class="text-center fw-bold mb-4">History of Attendance</h6>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-success"></div>
-              <div class="attendance-date">December 2, 2025</div>
-              <div class="text-muted attendance-time">1:00 PM</div>
-              <div class="attendance-status text-success fw-bold">PRESENT</div>
+          <div class="report-block mb-0">
+            <div class="table-responsive">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th style="width: 35%;">Name</th>
+                    <th style="width: 25%;">Student ID</th>
+                    <th class="text-center" style="width: 10%;">Present</th>
+                    <th class="text-center" style="width: 10%;">Late</th>
+                    <th class="text-center" style="width: 10%;">Absent</th>
+                    <th class="text-center" style="width: 10%;">Excuse</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1. Shamel G. Camposano</td>
+                    <td>2023-0323-ST-0</td>
+                    <td class="text-center">5,525</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1</td>
+                  </tr>
+                  <tr>
+                    <td>2. Jodiel Mhae B. Mores</td>
+                    <td>2023-00008-ST-0</td>
+                    <td class="text-center">5,525</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1</td>
+                  </tr>
+                  <tr>
+                    <td>3. Angeline Eunice J. Cabanes</td>
+                    <td>2023-00322-ST-0</td>
+                    <td class="text-center">5,525</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1</td>
+                  </tr>
+                  <tr>
+                    <td>4. Patricia M. Falible</td>
+                    <td>2023-00352-ST-0</td>
+                    <td class="text-center">5,525</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1</td>
+                  </tr>
+                  <tr>
+                    <td>5. Jhie Ann Pearl D. Villarosa</td>
+                    <td>2023-00021-ST-0</td>
+                    <td class="text-center">5,525</td>
+                    <td class="text-center">2</td>
+                    <td class="text-center">4</td>
+                    <td class="text-center">1</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-warning"></div>
-              <div class="attendance-date">December 9, 2025</div>
-              <div class="text-muted attendance-time">1:12 PM</div>
-              <div class="attendance-status text-warning fw-bold">LATE</div>
-            </div>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-success"></div>
-              <div class="attendance-date">December 16, 2025</div>
-              <div class="text-muted attendance-time">1:56 PM</div>
-              <div class="attendance-status text-success fw-bold">PRESENT</div>
-            </div>
-            <div class="attendance-item">
-              <div class="timeline-line"></div>
-              <div class="status-dot bg-danger"></div>
-              <div class="attendance-date">December 23, 2025</div>
-              <div class="text-muted attendance-time">1:45 PM</div>
-              <div class="attendance-status text-danger fw-bold">ABSENT</div>
-            </div>
-            <button class="btn-see-more">See More</button>
           </div>
         </div>
       </div>
