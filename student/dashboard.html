@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Dashboard - Archived</title>
+  <title>Student Module</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css"
     rel="stylesheet" />
@@ -37,6 +37,25 @@
       width: var(--sidebar-expanded);
     }
 
+    /* Logo Hidden by Default, centered and bigger on hover */
+    .sidebar-logo-img {
+      width: 0;
+      height: auto;
+      max-height: 80px;
+      object-fit: contain;
+      opacity: 0;
+      transition: all 0.3s ease;
+      transform: scale(0.6);
+      display: block;
+      margin: 0 auto;
+    }
+
+    #sidebar:hover .sidebar-logo-img {
+      width: 160px;
+      opacity: 1;
+      transform: scale(1);
+    }
+
     .nav-label {
       opacity: 0;
       transition: opacity 0.2s ease;
@@ -46,12 +65,6 @@
 
     #sidebar:hover .nav-label {
       opacity: 1;
-    }
-
-    .sidebar-logo-img {
-      width: 42px;
-      height: 42px;
-      object-fit: contain;
     }
 
     .nav-link {
@@ -209,14 +222,15 @@
 
 <body class="d-flex">
   <nav id="sidebar" class="vh-100 position-fixed start-0 top-0 d-flex flex-column text-white shadow">
-    <div class="d-flex align-items-center px-3 border-bottom border-white border-opacity-10" style="height: 80px;">
-      <div style="min-width: calc(var(--sidebar-width) - 32px);" class="text-center">
+    <div class="d-flex align-items-center px-3" style="height: 100px;">
+      <div class="w-100 text-center">
         <img src="../img/logo1.png" alt="Logo" class="sidebar-logo-img">
       </div>
     </div>
-    <div class="flex-grow-1 pt-4">
+    <div class="flex-grow-1 pt-2">
       <a href="dashboard.html" class="nav-link text-white d-flex align-items-center py-3 px-0 active">
-        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-grid-1x2 fs-3"></i></div>
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-grid-1x2 fs-3"></i>
+        </div>
         <span class="nav-label">Dashboard</span>
       </a>
       <a href="#" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
@@ -225,7 +239,8 @@
         <span class="nav-label">Reports</span>
       </a>
       <a href="archived.html" class="nav-link text-white d-flex align-items-center py-3 px-0 opacity-75">
-        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-archive fs-3"></i></div>
+        <div style="min-width: var(--sidebar-width);" class="text-center"><i class="bi bi-archive fs-3"></i>
+        </div>
         <span class="nav-label">Archived Subject</span>
       </a>
     </div>
@@ -244,7 +259,12 @@
         <span class="navbar-brand text-dark m-0 fs-3 fw-bold">MoniQR</span>
 
         <div class="ms-auto d-flex align-items-center gap-4">
-          <span class="text-muted d-none d-sm-inline" id="topbar-date"></span>
+          <div class="text-muted d-none d-sm-flex align-items-center">
+            <span id="topbar-date"></span>
+            <span class="mx-2">|</span>
+            <span id="topbar-time"></span>
+          </div>
+
           <div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm"
             style="width: 45px; height: 45px; cursor: pointer;">
             <i class="bi bi-person-fill fs-4" style="color: #7B1C2C;"></i>
@@ -252,7 +272,9 @@
         </div>
       </div>
     </header>
+
     <main class="p-4 p-lg-5">
+
       <h2 class="mb-4 fw-bold">My Class Folders</h2>
       <div class="row g-4">
         <div class="col-12 col-md-6 col-lg-4">
@@ -269,7 +291,8 @@
           <div class="folder-card" data-bs-toggle="modal" data-bs-target="#seminarModal">
             <i class="bi bi-folder-fill folder-icon"></i>
             <div class="subject-code">COMP 002 – Seminar</div>
-            <div class="prof-name"><i class="bi bi-person-fill me-1"></i>Prof. Christopher Jay De Claro</div>
+            <div class="prof-name"><i class="bi bi-person-fill me-1"></i>Prof. Christopher Jay De Claro
+            </div>
             <div class="schedule-date">
               <i class="bi bi-calendar"></i> S | 8:00 AM - 11:00 AM
             </div>
@@ -288,7 +311,6 @@
       </div>
     </main>
   </div>
-
   <div class="modal fade attendance-modal" id="capstoneModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
@@ -328,10 +350,8 @@
               </div>
             </div>
           </div>
-
           <div class="history-container">
             <h6 class="text-center fw-bold mb-4">History of Attendance</h6>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-success"></div>
@@ -339,7 +359,6 @@
               <div class="text-muted attendance-time">8:00 AM</div>
               <div class="attendance-status text-success fw-bold">PRESENT</div>
             </div>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-warning"></div>
@@ -347,7 +366,6 @@
               <div class="text-muted attendance-time">8:12 AM</div>
               <div class="attendance-status text-warning fw-bold">LATE</div>
             </div>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-success"></div>
@@ -355,7 +373,6 @@
               <div class="text-muted attendance-time">7:56 AM</div>
               <div class="attendance-status text-success fw-bold">PRESENT</div>
             </div>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-danger"></div>
@@ -363,14 +380,12 @@
               <div class="text-muted attendance-time">8:45 AM</div>
               <div class="attendance-status text-danger fw-bold">ABSENT</div>
             </div>
-
             <button class="btn-see-more">See More</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <div class="modal fade attendance-modal" id="seminarModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
@@ -410,10 +425,8 @@
               </div>
             </div>
           </div>
-
           <div class="history-container">
             <h6 class="text-center fw-bold mb-4">History of Attendance</h6>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-success"></div>
@@ -421,7 +434,6 @@
               <div class="text-muted attendance-time">8:00 AM</div>
               <div class="attendance-status text-success fw-bold">PRESENT</div>
             </div>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-warning"></div>
@@ -429,7 +441,6 @@
               <div class="text-muted attendance-time">8:12 AM</div>
               <div class="attendance-status text-warning fw-bold">LATE</div>
             </div>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-success"></div>
@@ -437,7 +448,6 @@
               <div class="text-muted attendance-time">7:56 AM</div>
               <div class="attendance-status text-success fw-bold">PRESENT</div>
             </div>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-danger"></div>
@@ -445,14 +455,12 @@
               <div class="text-muted attendance-time">8:45 AM</div>
               <div class="attendance-status text-danger fw-bold">ABSENT</div>
             </div>
-
             <button class="btn-see-more">See More</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
   <div class="modal fade attendance-modal" id="ojtModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
@@ -492,10 +500,8 @@
               </div>
             </div>
           </div>
-
           <div class="history-container">
             <h6 class="text-center fw-bold mb-4">History of Attendance</h6>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-success"></div>
@@ -503,7 +509,6 @@
               <div class="text-muted attendance-time">8:00 AM</div>
               <div class="attendance-status text-success fw-bold">PRESENT</div>
             </div>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-warning"></div>
@@ -511,7 +516,6 @@
               <div class="text-muted attendance-time">8:12 AM</div>
               <div class="attendance-status text-warning fw-bold">LATE</div>
             </div>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-success"></div>
@@ -519,7 +523,6 @@
               <div class="text-muted attendance-time">7:56 AM</div>
               <div class="attendance-status text-success fw-bold">PRESENT</div>
             </div>
-
             <div class="attendance-item">
               <div class="timeline-line"></div>
               <div class="status-dot bg-danger"></div>
@@ -527,7 +530,6 @@
               <div class="text-muted attendance-time">8:45 AM</div>
               <div class="attendance-status text-danger fw-bold">ABSENT</div>
             </div>
-
             <button class="btn-see-more">See More</button>
           </div>
         </div>
@@ -537,12 +539,29 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
   <script>
-    document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('en-US', {
-      weekday: 'short',
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
-    });
+    function updateDateTime() {
+      const now = new Date();
+
+      // Update Date Element
+      document.getElementById('topbar-date').textContent = now.toLocaleDateString('en-US', {
+        weekday: 'short',
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
+      // Update Time Element
+      document.getElementById('topbar-time').textContent = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      });
+    }
+
+    // Set interval to run every second
+    setInterval(updateDateTime, 1000);
+    updateDateTime(); // Run once immediately
   </script>
 </body>
 
