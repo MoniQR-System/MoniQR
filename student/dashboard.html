@@ -37,7 +37,6 @@
       width: var(--sidebar-expanded);
     }
 
-    /* Logo Hidden by Default, centered and bigger on hover */
     .sidebar-logo-img {
       width: 0;
       height: auto;
@@ -252,19 +251,16 @@
       </a>
     </div>
   </nav>
-
   <div id="main" class="flex-grow-1 d-flex flex-column">
     <header class="navbar navbar-expand bg-white border-bottom px-4 px-lg-5 shadow-sm" style="height: 80px;">
       <div class="container-fluid px-0">
         <span class="navbar-brand text-dark m-0 fs-3 fw-bold">MoniQR</span>
-
         <div class="ms-auto d-flex align-items-center gap-4">
           <div class="text-muted d-none d-sm-flex align-items-center">
             <span id="topbar-date"></span>
             <span class="mx-2">|</span>
             <span id="topbar-time"></span>
           </div>
-
           <div class="rounded-circle border d-flex align-items-center justify-content-center bg-light shadow-sm"
             style="width: 45px; height: 45px; cursor: pointer;">
             <i class="bi bi-person-fill fs-4" style="color: #7B1C2C;"></i>
@@ -272,9 +268,7 @@
         </div>
       </div>
     </header>
-
     <main class="p-4 p-lg-5">
-
       <h2 class="mb-4 fw-bold">My Class Folders</h2>
       <div class="row g-4">
         <div class="col-12 col-md-6 col-lg-4">
@@ -542,7 +536,6 @@
     function updateDateTime() {
       const now = new Date();
 
-      // Update Date Element
       document.getElementById('topbar-date').textContent = now.toLocaleDateString('en-US', {
         weekday: 'short',
         month: 'long',
@@ -550,7 +543,6 @@
         year: 'numeric'
       });
 
-      // Update Time Element
       document.getElementById('topbar-time').textContent = now.toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
@@ -559,9 +551,8 @@
       });
     }
 
-    // Set interval to run every second
     setInterval(updateDateTime, 1000);
-    updateDateTime(); // Run once immediately
+    updateDateTime(); 
   </script>
 </body>
 
